@@ -60,7 +60,7 @@ Solved sudoku puzzle in a grid format (same as imput) with all 0's replaced with
 
 ### Dependencies:
 
-* numpy == 1.21.0
+[Link to dependencies](requirements.txt)
 
 ## References
 
