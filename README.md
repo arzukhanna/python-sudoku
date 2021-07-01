@@ -24,7 +24,7 @@ Text file with a grid representing the sudoku puzzle to be solved.
 * Grid containing a total of 81 integers in a 9x9 format
 * Integers must be in range [0...9] 
 * Integers on each row separated by spaces
-* Each column starts on a new line
+* Each row starts on a new line
 
 ## Output:
 
