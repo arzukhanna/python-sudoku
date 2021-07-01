@@ -11,10 +11,24 @@ What you need to learn about GitLab Markdown.
 ---
 
 ## Aim: 
+
 To create a solution to the sudoku puzzle.
 
 ## Inputs:
-Partially filled in sudoku puzzle that needs to be completed (input as a grid - example as below) 
+
+Text file with a grid representing the sudoku puzzle to be solved.
+
+**Input Grid requirements:**
+(These requirements must be tested for using a helper function)
+
+* Grid containing a total of 81 integers in a 9x9 format
+* Integers must be in range [0...9] 
+* Integers on each row separated by spaces
+* Each column starts on a new line
+
+## Output:
+
+Solved sudoku puzzle in a grid format (same as imput) with all 0's replaced with integers in range [1...9].
 
 ## Sample sudoku problem:
 
@@ -31,17 +45,25 @@ Partially filled in sudoku puzzle that needs to be completed (input as a grid - 
 ```
 
 ## Requirements / Dependencies 
+
 ### How to create:
+
 `virtualenv`
+
 `source venv/bin/activate`
+
 `pip freeze --local > requirements.txt`
+
 `pip list` shows all packages installed in the environment.
+
 `deactivate` takes you out of virtual environment into global environment.
 
 ### Dependencies:
+
 * numpy == 1.21.0
 
 ## References
+
 * sudoku code: https://www.youtube.com/watch?v=G_UYXzGuqvM
 * virtualenv: https://www.youtube.com/watch?v=N5vscPTWKOk
 
