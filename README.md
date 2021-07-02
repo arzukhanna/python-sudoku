@@ -22,13 +22,13 @@ Text file with a grid representing the sudoku puzzle to be solved.
 (These requirements must be tested for using a helper function)
 
 * Grid containing a total of 81 integers in a 9x9 format
-* Integers must be in range [0...9] 
+* Integers must be in range `[0...9]`
 * Integers on each row separated by spaces
 * Each row starts on a new line
 
 ## Output:
 
-Solved sudoku puzzle in a grid format (same as imput) with all 0's replaced with integers in range [1...9].
+Solved sudoku puzzle in a grid format (same as imput) with all 0's replaced with integers in range `[1...9]`.
 
 ## Sample sudoku problem:
 

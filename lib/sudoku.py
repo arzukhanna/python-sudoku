@@ -14,27 +14,37 @@ def read_grid(file):
     :return: List of lists representing sudoku puzzle.
     """
     grid = []
-    file = open(file, 'r', encoding='utf-8')
     for line in file:
         grid.append([int(n) for n in line.split()])
     return grid
 
 
-def is_grid_valid(grid):
+def is_row_valid(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
-    :return: TRUE if grid is valid, FALSE otherwise.
+    :return: TRUE if row is valid, FALSE otherwise.
     """
-    # 1. Check there are 9 rows
     if len(grid) != 9:
         return False
+    return True
 
-    # 2. Check all rows have 9 numbers
+
+def is_col_valid(grid):
+    """
+    :param grid: List of lists representing sudoku puzzle.
+    :return: TRUE if column is valid, FALSE otherwise.
+    """
     for row in grid:
         if len(grid[row]) != 9:
             return False
+    return True
 
-    # 3. Check that grid contains only integers in range [0...9]
+
+def is_cell_valid(grid):
+    """
+    :param grid: List of lists representing sudoku puzzle.
+    :return: TRUE if cell is valid, FALSE otherwise.
+    """
     for row in grid:
         for i in row:
             try:
@@ -44,6 +54,15 @@ def is_grid_valid(grid):
             except TypeError:
                 return False
     return True
+
+
+def is_grid_valid(grid):
+    """
+    :param grid: List of lists representing sudoku puzzle.
+    :return: TRUE if grid is valid, FALSE otherwise.
+    """
+
+    return is_row_valid(grid) and is_col_valid(grid) and is_cell_valid(grid)
 
 
 def possible(grid, _y, _x, _n):
