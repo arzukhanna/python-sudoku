@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 black == 21.6b0
 flake8 >= 3.9.2, <3.9.3
 isort >= 5.9.1, <5.9.2
@@ -7,3 +8,14 @@ pycodestyle >= 2.7, <2.8
 pyflakes >= 2.3.1, <2.3.2
 pylint >= 2.9.1, <2.9.2
 pytest >= 6.2.4, <6.3
+=======
+flake8 >= 3.9.2,<3.9.3
+isort >= 5.9.1,<5.9.2
+mccabe >= 0.6.1,<0.6.2
+numpy >= 1.20.2,<1.20.3
+pycodestyle >= 2.7,<2.8
+pyflakes >= 2.3.1,<2.3.2
+pytest >= 6.2.4,<6.2.5
+yapf >= 0.31,<0.32
+pylint >= 2.9.1,<2.9.2
+>>>>>>> acf8b0c (updated requirements)
