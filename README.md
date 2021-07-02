@@ -1,6 +1,5 @@
 # python-sudoku
 
-<<<<<<< HEAD
 What you need to learn about GitLab Markdown.
 
 * headings (levels)
@@ -67,11 +66,3 @@ Solved sudoku puzzle in a grid format (same as imput) with all 0's replaced with
 
 * sudoku code: https://www.youtube.com/watch?v=G_UYXzGuqvM
 * virtualenv: https://www.youtube.com/watch?v=N5vscPTWKOk
-
-
-=======
-***Aim:*** To create a solution to the sudoku puzzle.
-<br>
-
-***Inputs:*** Partially filled in sudoku puzzle that needs to be completed.
->>>>>>> fa22aa8 (Update README.md)
