@@ -8,7 +8,7 @@ SRCS	:= $(wildcard *.py **/*.py)
 
 .PHONY: all check clean help run setup tags test version
 
-default: check
+default: check test
 
 help:
 	@echo
