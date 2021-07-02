@@ -25,7 +25,7 @@ build:
   stage: build
   script:
     - isort --check --diff *.py lib/*.py test/*.py
-    - black *.py lib/*.py test/*.py
+    - black --check *.py lib/*.py test/*.py
     - flake8 *.py lib/*.py test/*.py
     - pylint *.py lib/*.py test/*.py
     - pytest -v test/test*.py
