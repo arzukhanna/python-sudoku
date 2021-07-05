@@ -5,6 +5,8 @@ Modified: 2.07.2021
 """
 import unittest
 
+from lib import sudoku
+
 
 class MyTestCase(unittest.TestCase):
     """
@@ -16,7 +18,13 @@ class MyTestCase(unittest.TestCase):
         """
         Test case in which all rows are valid.
         """
-        self.assertEqual(True, False)
+        grid = [[6, 5, 4, 1, 9, 8, 3, 7, 6], [8, 1, 7, 4, 3, 6, 5, 2, 9],
+                [9, 6, 3, 5, 2, 7, 8, 4, 1], [6, 4, 2, 9, 5, 1, 7, 3, 8],
+                [5, 8, 1, 2, 7, 3, 9, 6, 4], [7, 3, 9, 8, 6, 4, 2, 1, 5],
+                [4, 7, 6, 3, 8, 5, 1, 9, 2], [1, 9, 8, 7, 4, 2, 6, 5, 3],
+                [3, 2, 5, 6, 1, 9, 4, 8, 7]]
+        result = sudoku.dim_valid(grid)
+        self.assertEqual(True, result, "Dimensions are correct")
 
     def test_row_invalid(self):
         """

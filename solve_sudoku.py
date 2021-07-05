@@ -9,7 +9,9 @@ Modified: 2.07.2021
 import argparse
 import sys
 
-from lib.sudoku import is_grid_valid, read_grid, solve_sudoku
+import numpy
+
+from lib.sudoku import is_grid_valid, read_grid, solve_puzzle
 
 if __name__ == "__main__":
 
@@ -31,7 +33,8 @@ if __name__ == "__main__":
     grid = read_grid(args.puzzle)
 
     if is_grid_valid(grid):
-        print(solve_sudoku(grid))
+        solve_puzzle(grid)
+        print(numpy.matrix(grid))
     else:
         parser.print_help(sys.stderr)
         sys.exit(1)

@@ -19,28 +19,40 @@ def read_grid(file):
     return grid
 
 
-def is_row_valid(grid):
+def dim_valid(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
-    :return: TRUE if row is valid, FALSE otherwise.
+    :return: TRUE if dimensions are valid, FALSE otherwise.
     """
     if len(grid) != 9:
         return False
-    return True
-
-
-def is_col_valid(grid):
-    """
-    :param grid: List of lists representing sudoku puzzle.
-    :return: TRUE if column is valid, FALSE otherwise.
-    """
     for row in grid:
-        if len(grid[row]) != 9:
+        if len(row) != 9:
             return False
     return True
 
 
-def is_cell_valid(grid):
+def row_valid(grid):
+    """
+    :param grid: List of lists representing sudoku puzzle.
+    :return: TRUE if row is valid, FALSE otherwise.
+    """
+    for row in grid:
+        if len(row) == len(set(row)):
+            return False
+    return True
+
+
+def col_valid(grid):
+    """
+    :param grid: List of lists representing sudoku puzzle.
+    :return: TRUE if column is valid, FALSE otherwise.
+    """
+    grid = numpy.transpose(grid)
+    return row_valid(grid)
+
+
+def cell_valid(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if cell is valid, FALSE otherwise.
@@ -61,8 +73,8 @@ def is_grid_valid(grid):
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if grid is valid, FALSE otherwise.
     """
-
-    return is_row_valid(grid) and is_col_valid(grid) and is_cell_valid(grid)
+    return dim_valid(grid) and row_valid(grid) and col_valid(
+        grid) and cell_valid(grid)
 
 
 def possible(grid, _y, _x, _n):
@@ -90,20 +102,33 @@ def possible(grid, _y, _x, _n):
     return True
 
 
-def solve_sudoku(grid):
+def next_empty(grid):
     """
-    Function: Iterates through each cell in the puzzle to determine
-    which cells need to be solved.
+    Function: Iterates through the cells in the puzzle to find the
+    next empty cell which needs to be solved.
     :param grid: current state of sudoku puzzle
     """
     for _y in range(9):
         for _x in range(9):
             if grid[_y][_x] == 0:
-                for _n in range(1, 10):
-                    if possible(grid, _y, _x, _n):
-                        grid[_y][_x] = _n
-                        solve_sudoku(grid)
-                        # back-tracking (re-set cell if we reach dead-end)
-                        grid[_y][_x] = 0
-                return None
-    return numpy.matrix(grid)
+                return _y, _x
+    return None, None
+
+
+def solve_puzzle(grid):
+    """
+    Function: Solve the sudoku puzzle
+    :param grid: current state of sudoku puzzle
+    """
+    _y, _x = next_empty(grid)
+
+    if _y is None:
+        return True
+
+    for _n in range(1, 10):
+        if possible(grid, _y, _x, _n):
+            grid[_y][_x] = _n
+            if solve_puzzle(grid):
+                return True
+        grid[_y][_x] = 0
+    return False
