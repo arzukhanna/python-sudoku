@@ -18,7 +18,7 @@ To create a solution to the sudoku puzzle.
 
 Text file with a grid representing the sudoku puzzle to be solved.
 
-**Input Grid requirements:**
+### Input Grid requirements:
 (These requirements must be tested for using a helper function)
 
 * Grid containing a total of 81 integers in a 9x9 format
@@ -46,17 +46,20 @@ Solved sudoku puzzle in a grid format (same as imput) with all 0's replaced with
 
 ## Requirements / Dependencies 
 
+To specify the versions of the packages used, we set up a virtual environment for the project.
+This allows the project to be replicated without any dependency conflicts.
+
 ### How to create:
 
-`virtualenv`
-
-`source venv/bin/activate`
-
-`pip freeze --local > requirements.txt`
-
-`pip list` shows all packages installed in the environment.
-
-`deactivate` takes you out of virtual environment into global environment.
+| Command | Description |
+| --------|-------------|
+|`pip3 install -U virtualenv`| Install virtualenv |
+|`python3 -m virtualenv venv`| Install virtualenv |   
+|`virtual venv`              | Initialises a virtual environment (creates folder called venv)|
+|`source venv/bin/activate`  | Start the virtual environment|
+|`pip freeze --local > requirements.txt`| Saves the current dependencies in requirements.txt|
+|`pip list` |Shows all packages installed in the environment|
+|`deactivate` | Takes you out of the virtual environment and into the global environment|
 
 ### Dependencies:
 

@@ -19,7 +19,7 @@ def read_grid(file):
     return grid
 
 
-def dim_valid(grid):
+def dim_val(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if dimensions are valid, FALSE otherwise.
@@ -32,7 +32,7 @@ def dim_valid(grid):
     return True
 
 
-def row_valid(grid):
+def row_val(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if row is valid, FALSE otherwise.
@@ -43,16 +43,16 @@ def row_valid(grid):
     return True
 
 
-def col_valid(grid):
+def col_val(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if column is valid, FALSE otherwise.
     """
     grid = numpy.transpose(grid)
-    return row_valid(grid)
+    return row_val(grid)
 
 
-def cell_valid(grid):
+def cell_val(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if cell is valid, FALSE otherwise.
@@ -73,8 +73,7 @@ def is_grid_valid(grid):
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if grid is valid, FALSE otherwise.
     """
-    return dim_valid(grid) and row_valid(grid) and col_valid(
-        grid) and cell_valid(grid)
+    return all([dim_val(grid), row_val(grid), col_val(grid), cell_val(grid)])
 
 
 def possible(grid, _y, _x, _n):
