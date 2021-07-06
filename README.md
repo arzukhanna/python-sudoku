@@ -1,36 +1,26 @@
-# python-sudoku
+# PYTHON SUDOKU
 
-What you need to learn about GitLab Markdown.
+This program solves any problem to the sudoku puzzle.
 
-* headings (levels)
-* links to code
-* embed images
-* lists
-* format inline code
-
----
-
-## Aim: 
-
-To create a solution to the sudoku puzzle.
-
-## Inputs:
+## Inputs
 
 Text file with a grid representing the sudoku puzzle to be solved.
 
-### Input Grid requirements:
+### Input Grid requirements
 (These requirements must be tested for using a helper function)
 
 * Grid containing a total of 81 integers in a 9x9 format
-* Integers must be in range `[0...9]`
-* Integers on each row separated by spaces
+* Integers must be in range `[0...9]` 
+  * `0` - Empty cell that needs to be solved
+  * `[1...9]` - Cells that are already solved and must not be changed
 * Each row starts on a new line
+* No duplicate integers in any row, column or 3x3 cell 
 
-## Output:
+## Output
 
-Solved sudoku puzzle in a grid format (same as imput) with all 0's replaced with integers in range `[1...9]`.
+Solved sudoku puzzle with same dimensions as input with all 0's replaced with integers in range `[1...9]`.
 
-## Sample sudoku problem:
+## Sample sudoku problem
 
 ```text
 5 3 0 0 7 0 0 0 0
@@ -44,12 +34,12 @@ Solved sudoku puzzle in a grid format (same as imput) with all 0's replaced with
 0 0 0 0 8 0 0 7 9
 ```
 
-## Requirements / Dependencies 
+## Virtual Environment
 
 To specify the versions of the packages used, we set up a virtual environment for the project.
 This allows the project to be replicated without any dependency conflicts.
 
-### How to create:
+### Setting Up Venv
 
 | Command | Description |
 | --------|-------------|
@@ -57,15 +47,42 @@ This allows the project to be replicated without any dependency conflicts.
 |`python3 -m virtualenv venv`| Install virtualenv |   
 |`virtual venv`              | Initialises a virtual environment (creates folder called venv)|
 |`source venv/bin/activate`  | Start the virtual environment|
-|`pip freeze --local > requirements.txt`| Saves the current dependencies in requirements.txt|
+|`pip3 install -U -r requirements.txt`| From requirements.txt, installs all relevant dependencies to run program|
 |`pip list` |Shows all packages installed in the environment|
 |`deactivate` | Takes you out of the virtual environment and into the global environment|
 
-### Dependencies:
+### Updating Python version used in venv
 
-[Link to dependencies](requirements.txt)
+Command:
+```virtualenv --python=<path to python 3.9> <path/to/virtualenv/>```
+
+To check versions being used:
+```python3 --version```
+```env/bin/python --version```
+
+## Makefile
+
+Makefiles are special format files that help build and manage projects automatically through use of `make`.
+The makefile used specifies the virtual environment set-up process which can be accessed using `make help`.
+The below tools are automatically run when the `make` command is run.
+
+### Make Components
+
+| Tool | Description |
+| --------|-------------|
+|`isort`| Sorts Inputs |
+|`black `| Format the Code |   
+|`flake8`| Style Checks|
+|`pylint` | Static Code Checks|
+|`pytest`| Unit Testing Framework|
+
+## Requirements
+
+[Package Versions Required](requirements.txt)
 
 ## References
 
-* sudoku code: https://www.youtube.com/watch?v=G_UYXzGuqvM
-* virtualenv: https://www.youtube.com/watch?v=N5vscPTWKOk
+* [Sudoku Code](https://www.youtube.com/watch?v=G_UYXzGuqvM)
+* [How to create a Virtual Environment](https://www.youtube.com/watch?v=N5vscPTWKOk)
+* [Pytest Fixtures](https://docs.pytest.org/en/6.2.x/fixture.html#fixtures-are-reusable)
+* [Make Guidelines](https://interrupt.memfault.com/blog/gnu-make-guidelines#when-to-choose-make)

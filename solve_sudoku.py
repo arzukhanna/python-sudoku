@@ -2,8 +2,6 @@
 """
 Main Program to solve Sudoku Puzzles.
 Author: Arzu Khanna
-Created: 30.06.2021
-Modified: 2.07.2021
 """
 
 import argparse

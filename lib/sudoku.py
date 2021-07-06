@@ -1,8 +1,6 @@
 """
 Library program to solve Sudoku puzzles.
 Author: Arzu Khanna
-Created: 30.06.2021
-Modified: 2.07.2021
 """
 
 import numpy
@@ -19,10 +17,12 @@ def read_grid(file):
     return grid
 
 
-def dim_val(grid):
+def dimension_is_valid(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if dimensions are valid, FALSE otherwise.
+    To be valid, the grid has to be a 2 dimensional array with 9 rows
+    and 9 columns.
     """
     if len(grid) != 9:
         return False
@@ -32,38 +32,47 @@ def dim_val(grid):
     return True
 
 
-def row_val(grid):
+def row_is_valid(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if row is valid, FALSE otherwise.
+    To be valid, the row should not contain duplicates of integers
+    other than 0.
     """
     for row in grid:
-        if len(row) == len(set(row)):
+        numbers_in_row = []
+        for i in row:
+            if i != 0:
+                numbers_in_row.append(i)
+        if len(numbers_in_row) == len(set(numbers_in_row)):
             return False
     return True
 
 
-def col_val(grid):
+def col_is_valid(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if column is valid, FALSE otherwise.
+    To be valid, the column should not contain duplicates of integers
+    other than 0.
     """
     grid = numpy.transpose(grid)
-    return row_val(grid)
+    return row_is_valid(grid)
 
 
-def cell_val(grid):
+def cell_is_valid(grid):
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if cell is valid, FALSE otherwise.
+    To be valid, the cells should only be integers in the range [0...9]
+    where 0 represents a cell that still needs to be solved (is empty),
+    while the other cells have already been solved.
     """
     for row in grid:
         for i in row:
-            try:
-                if not 0 <= i <= 9:
-                    return False
-            # if i is not an integer then a TypeError will arise, return False
-            except TypeError:
+            if not isinstance(i, int):
+                return False
+            if not 0 <= i <= 9:
                 return False
     return True
 
@@ -73,10 +82,10 @@ def is_grid_valid(grid):
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if grid is valid, FALSE otherwise.
     """
-    return all([dim_val(grid), row_val(grid), col_val(grid), cell_val(grid)])
+    return all([dimension_is_valid(grid), row_is_valid(grid), col_is_valid(grid), cell_is_valid(grid)])
 
 
-def possible(grid, _y, _x, _n):
+def possible(grid, _y: int, _x: int, _n: int):
     """
     Function: Determines whether inputting n in a particular cell (grid[y][x])
     is possible according to sudoku rules.
