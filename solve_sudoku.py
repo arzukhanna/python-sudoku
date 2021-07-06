@@ -25,6 +25,7 @@ if __name__ == "__main__":
         "--puzzle",
         type=argparse.FileType("r", encoding="utf-8"),
         help="file that contains sudoku puzzle as grid",
+        required=True,
     )
 
     parser.add_argument("--version", action="version", version=__version__)
