@@ -44,7 +44,7 @@ def row_is_valid(grid):
         for i in row:
             if i != 0:
                 numbers_in_row.append(i)
-        if len(numbers_in_row) == len(set(numbers_in_row)):
+        if len(numbers_in_row) != len(set(numbers_in_row)):
             return False
     return True
 
@@ -82,7 +82,14 @@ def is_grid_valid(grid):
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if grid is valid, FALSE otherwise.
     """
-    return all([dimension_is_valid(grid), row_is_valid(grid), col_is_valid(grid), cell_is_valid(grid)])
+    return all(
+        [
+            dimension_is_valid(grid),
+            row_is_valid(grid),
+            col_is_valid(grid),
+            cell_is_valid(grid),
+        ]
+    )
 
 
 def possible(grid, _y: int, _x: int, _n: int):

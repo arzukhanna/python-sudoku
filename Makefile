@@ -54,7 +54,7 @@ lint:
 	pylint $(SRCS)
 
 test:
-	pytest -v test/test*.py
+	pytest -v tests/test*.py
 
 exec:
 	$(PYTHON) solve-sudoku.py

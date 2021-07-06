@@ -7,7 +7,13 @@ import unittest
 
 import pytest
 
-from lib import sudoku
+from lib.sudoku import (
+    cell_is_valid,
+    col_is_valid,
+    dimension_is_valid,
+    is_grid_valid,
+    row_is_valid,
+)
 
 
 @pytest.fixture
@@ -82,74 +88,74 @@ def cell_outside_range_grid():
     return [[0, 1, 2, 10, 8, 9, 0, 0, 0, 0]]
 
 
-def test_grid_dimension_is_valid():
+def test_grid_dimension_is_valid(correct_grid):
     """
     Test case in which all rows are valid.
     """
-    assert sudoku.dimension_is_valid(correct_grid)
+    assert dimension_is_valid(correct_grid)
 
 
-def test_grid_dimension_is_invalid():
+def test_grid_dimension_is_invalid(incorrect_dim_grid):
     """
     Test case in which all rows are valid.
     """
-    assert sudoku.dimension_is_valid(incorrect_dim_grid)
+    assert not dimension_is_valid(incorrect_dim_grid)
 
 
-def test_grid_rows_valid():
+def test_grid_rows_valid(correct_grid):
     """
     Test case in which at least one row is invalid.
     """
-    assert sudoku.row_is_valid(correct_grid)
+    assert row_is_valid(correct_grid)
 
 
-def test_grid_rows_duplicates_invalid():
+def test_grid_rows_duplicates_invalid(row_dup_grid):
     """
     Test case in which at least one row is invalid.
     """
-    assert not sudoku.row_is_valid(row_dup_grid)
+    assert not row_is_valid(row_dup_grid)
 
 
-def test_column_valid():
+def test_column_valid(correct_grid):
     """
     Test case in which all columns are valid.
     """
-    assert sudoku.col_is_valid(correct_grid)
+    assert col_is_valid(correct_grid)
 
 
-def test_grid_cols_duplicates_invalid():
+def test_grid_cols_duplicates_invalid(col_dup_grid):
     """
     Test case in which all columns are valid.
     """
-    assert not sudoku.col_is_valid(col_dup_grid)
+    assert not col_is_valid(col_dup_grid)
 
 
-def test_cell_is_valid():
+def test_cell_is_valid(correct_grid):
     """
     Test case in which all cells are valid.
     """
-    assert sudoku.cell_is_valid(correct_grid)
+    assert cell_is_valid(correct_grid)
 
 
-def test_cell_has_letter_invalid():
+def test_cell_has_letter_invalid(cell_has_letter_grid):
     """
     Test case in which letter appears in grid.
     """
-    assert not sudoku.cell_is_valid(cell_has_letter_grid)
+    assert not cell_is_valid(cell_has_letter_grid)
 
 
-def test_cell_outside_range_invalid():
+def test_cell_outside_range_invalid(cell_outside_range_grid):
     """
     Test case in which integer outside correct range appears in grid.
     """
-    assert not sudoku.cell_is_valid(cell_outside_range_grid)
+    assert not cell_is_valid(cell_outside_range_grid)
 
 
-def test_solved_puzzle_correctly():
+def test_solved_puzzle_correctly(correct_grid):
     """
     Test case in which puzzle has been solved correctly.
     """
-    assert sudoku.is_grid_valid(correct_grid)
+    assert is_grid_valid(correct_grid)
 
 
 if __name__ == "__main__":
