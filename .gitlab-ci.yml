@@ -24,11 +24,11 @@ before_script:
 build:
   stage: build
   script:
-    - isort --check --diff *.py lib/*.py test/*.py
-    - black --check *.py lib/*.py test/*.py
-    - flake8 *.py lib/*.py test/*.py
-    - pylint *.py lib/*.py test/*.py
-    - pytest -v test/test*.py
+    - isort --check --diff *.py lib/*.py tests/*.py
+    - black --check *.py lib/*.py tests/*.py
+    - flake8 *.py lib/*.py tests/*.py
+    - pylint *.py lib/*.py tests/*.py
+    - pytest -v tests
     - python solve-sudoku.py -p data/easy.txt
     - python solve-sudoku.py -h
     - python solve-sudoku.py --version
