@@ -57,6 +57,7 @@ test:
 	pytest -v tests/test*.py
 
 exec:
+	cat data/easy.txt
 	$(PYTHON) solve_sudoku.py -p data/easy.txt
 	$(PYTHON) solve_sudoku.py -h
 
