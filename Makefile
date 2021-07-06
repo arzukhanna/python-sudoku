@@ -57,10 +57,11 @@ test:
 	pytest -v tests/test*.py
 
 exec:
-	$(PYTHON) solve-sudoku.py
+	$(PYTHON) solve_sudoku.py -p data/easy.txt
+	$(PYTHON) solve_sudoku.py -h
 
 version:
-	$(PYTHON) solve-sudoku.py -v
+	$(PYTHON) solve_sudoku.py -v
 
 clean:
 	# clean generated artefacts
