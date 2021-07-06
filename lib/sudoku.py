@@ -17,12 +17,11 @@ def read_grid(file):
     return grid
 
 
-def dimension_is_valid(grid):
+def is_dimension_valid(grid):
     """
+    :return: TRUE if dimensions are valid, FALSE otherwise. To be valid,
+    the grid has to be a 2 dimensional array with 9 rows and 9 columns.
     :param grid: List of lists representing sudoku puzzle.
-    :return: TRUE if dimensions are valid, FALSE otherwise.
-    To be valid, the grid has to be a 2 dimensional array with 9 rows
-    and 9 columns.
     """
     if len(grid) != 9:
         return False
@@ -32,12 +31,11 @@ def dimension_is_valid(grid):
     return True
 
 
-def row_is_valid(grid):
+def is_row_valid(grid):
     """
+    :return: TRUE if row is valid, FALSE otherwise. To be valid, the
+    row should not contain duplicates of integers other than 0.
     :param grid: List of lists representing sudoku puzzle.
-    :return: TRUE if row is valid, FALSE otherwise.
-    To be valid, the row should not contain duplicates of integers
-    other than 0.
     """
     for row in grid:
         numbers_in_row = []
@@ -49,24 +47,23 @@ def row_is_valid(grid):
     return True
 
 
-def col_is_valid(grid):
+def is_column_valid(grid):
     """
+    :return: TRUE if column is valid, FALSE otherwise. To be valid,
+    the column should not contain duplicates of integers other than 0.
     :param grid: List of lists representing sudoku puzzle.
-    :return: TRUE if column is valid, FALSE otherwise.
-    To be valid, the column should not contain duplicates of integers
-    other than 0.
     """
     grid = numpy.transpose(grid)
-    return row_is_valid(grid)
+    return is_row_valid(grid)
 
 
-def cell_is_valid(grid):
+def is_cell_valid(grid):
     """
+    :return: TRUE if cell is valid, FALSE otherwise. To be valid, the
+    cells should only be integers in the range [0...9] where 0 represents
+    a cell that still needs to be solved (is empty), while the other cells
+    have already been solved.
     :param grid: List of lists representing sudoku puzzle.
-    :return: TRUE if cell is valid, FALSE otherwise.
-    To be valid, the cells should only be integers in the range [0...9]
-    where 0 represents a cell that still needs to be solved (is empty),
-    while the other cells have already been solved.
     """
     for row in grid:
         for i in row:
@@ -84,10 +81,10 @@ def is_grid_valid(grid):
     """
     return all(
         [
-            dimension_is_valid(grid),
-            row_is_valid(grid),
-            col_is_valid(grid),
-            cell_is_valid(grid),
+            is_dimension_valid(grid),
+            is_row_valid(grid),
+            is_column_valid(grid),
+            is_cell_valid(grid),
         ]
     )
 
@@ -102,18 +99,26 @@ def possible(grid, _y: int, _x: int, _n: int):
     :param _n: Number in cell
     :return: TRUE if possible for n to go in cell, FALSE otherwise.
     """
+    # 1. Check if _n is already in row _y
     for i in range(9):
         if grid[_y][i] == _n:
             return False
+
+    # 2. Check if _n is already in column _x
     for i in range(9):
         if grid[i][_x] == _n:
             return False
+
+    # 3. Check if _n is already in 3x3 block
     _x0 = (_x // 3) * 3
     _y0 = (_y // 3) * 3
     for i in range(3):
         for j in range(3):
             if grid[_y0 + i][_x0 + j] == _n:
                 return False
+
+    # If _n is not in row _y, column _x, or 3x3 block where grid[_y][_x],
+    # then the move is possible and return True.
     return True
 
 
