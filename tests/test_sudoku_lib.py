@@ -3,6 +3,7 @@ Unit tests to check functioning of Sudoku solver.
 """
 
 from lib import sudoku
+import hypothesis.strategies as st
 
 GOOD_GRID = [
     [2, 5, 4, 1, 9, 8, 3, 7, 6],

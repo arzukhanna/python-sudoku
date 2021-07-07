@@ -36,7 +36,7 @@ def is_row_valid(row: list) -> bool:
     """
     For a row to be valid, it should not contain duplicates of integers
     other than 0 and all cell values should be valid (see is_cell_valid).
-    :param row: List of lists representing sudoku puzzle.
+    :param row: Row in the sudoku puzzle.
     :return: TRUE if row is valid, FALSE otherwise.
     """
     for cell in row:
@@ -57,7 +57,7 @@ def is_column_valid(column: list) -> bool:
     """
     For a column to be valid, it should not contain duplicates of integers
     other than 0 and all cell values should be valid (see is_cell_valid).
-    :param column: List of lists representing sudoku puzzle.
+    :param column: Column in the sudoku puzzle.
     :return: TRUE if column is valid, FALSE otherwise.
     """
     return is_row_valid(column)
@@ -68,7 +68,7 @@ def is_cell_valid(cell_value: int) -> bool:
     For a cell to be valid, it should be an integer in the range [0...9]
     where 0 represents a cell that still needs to be solved (is empty),
     while the other cells have already been solved.
-    :param cell_value: List of lists representing sudoku puzzle.
+    :param cell_value: Cell in the sudoku puzzle.
     :return: TRUE if cell is valid, FALSE otherwise.
     """
     # 1. Check that cell is an integer
@@ -84,6 +84,7 @@ def is_cell_valid(cell_value: int) -> bool:
 
 def is_grid_valid(grid: list) -> bool:
     """
+    The grid is valid if it satisfies all other functions ending in _is_valid.
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if grid is valid, FALSE otherwise.
     """
