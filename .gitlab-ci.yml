@@ -29,6 +29,7 @@ build:
     - flake8 *.py lib/*.py tests/*.py
     - pylint *.py lib/*.py tests/*.py
     - pytest -v tests
+    - cat data/easy.txt
     - python solve_sudoku.py -p data/easy.txt
     - python solve_sudoku.py -h
     - python solve_sudoku.py --version

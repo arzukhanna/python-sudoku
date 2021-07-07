@@ -6,7 +6,7 @@ Author: Arzu Khanna
 import numpy
 
 
-def read_grid(file):
+def read_grid(file: str) -> list:
     """
     :param file: File containing sudoku puzzle to be solved.
     :return: List of lists representing sudoku puzzle.
@@ -17,11 +17,12 @@ def read_grid(file):
     return grid
 
 
-def is_dimension_valid(grid):
+def is_dimension_valid(grid: list) -> bool:
     """
-    :return: TRUE if dimensions are valid, FALSE otherwise. To be valid,
-    the grid has to be a 2 dimensional array with 9 rows and 9 columns.
+    To have valid dimensions, the grid has to be a 2 dimensional array
+    with 9 rows and 9 columns.
     :param grid: List of lists representing sudoku puzzle.
+    :return: TRUE if dimensions are valid, FALSE otherwise.
     """
     if len(grid) != 9:
         return False
@@ -31,39 +32,38 @@ def is_dimension_valid(grid):
     return True
 
 
-def is_row_valid(grid):
+def is_row_valid(grid: list) -> bool:
     """
-    :return: TRUE if row is valid, FALSE otherwise. To be valid, the
-    row should not contain duplicates of integers other than 0.
+    For a row to be valid, it should not contain duplicates of integers
+    other than 0.
     :param grid: List of lists representing sudoku puzzle.
+    :return: TRUE if row is valid, FALSE otherwise.
     """
     for row in grid:
-        numbers_in_row = []
-        for i in row:
-            if i != 0:
-                numbers_in_row.append(i)
-        if len(numbers_in_row) != len(set(numbers_in_row)):
+        current_row = [i for i in row if i != 0]
+        if len(set(current_row)) != len(current_row):
             return False
     return True
 
 
-def is_column_valid(grid):
+def is_column_valid(grid: list) -> bool:
     """
-    :return: TRUE if column is valid, FALSE otherwise. To be valid,
-    the column should not contain duplicates of integers other than 0.
+    For a column to be valid, it should not contain duplicates of integers
+    other than 0.
     :param grid: List of lists representing sudoku puzzle.
+    :return: TRUE if column is valid, FALSE otherwise.
     """
     grid = numpy.transpose(grid)
     return is_row_valid(grid)
 
 
-def is_cell_valid(grid):
+def is_cell_valid(grid: list) -> bool:
     """
-    :return: TRUE if cell is valid, FALSE otherwise. To be valid, the
-    cells should only be integers in the range [0...9] where 0 represents
-    a cell that still needs to be solved (is empty), while the other cells
-    have already been solved.
+    For a cell to be valid, it should be an integer in the range [0...9]
+    where 0 represents a cell that still needs to be solved (is empty),
+    while the other cells have already been solved.
     :param grid: List of lists representing sudoku puzzle.
+    :return: TRUE if cell is valid, FALSE otherwise.
     """
     for row in grid:
         for i in row:
@@ -74,7 +74,7 @@ def is_cell_valid(grid):
     return True
 
 
-def is_grid_valid(grid):
+def is_grid_valid(grid: list) -> bool:
     """
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if grid is valid, FALSE otherwise.
@@ -89,7 +89,7 @@ def is_grid_valid(grid):
     )
 
 
-def possible(grid, _y: int, _x: int, _n: int):
+def possible(grid, _y: int, _x: int, _n: int) -> bool:
     """
     Function: Determines whether inputting n in a particular cell (grid[y][x])
     is possible according to sudoku rules.
@@ -122,7 +122,7 @@ def possible(grid, _y: int, _x: int, _n: int):
     return True
 
 
-def next_empty(grid):
+def next_empty(grid: list) -> (int, int):
     """
     Function: Iterates through the cells in the puzzle to find the
     next empty cell which needs to be solved.
@@ -135,7 +135,7 @@ def next_empty(grid):
     return None, None
 
 
-def solve_puzzle(grid):
+def solve_puzzle(grid: list) -> bool:
     """
     Function: Solve the sudoku puzzle
     :param grid: current state of sudoku puzzle
