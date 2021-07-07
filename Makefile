@@ -33,12 +33,6 @@ help:
 	@echo
 	@$(PYTHON) wordpuzzle.py -h
 
-setup:
-	$(PIP) install -U virtualenv
-	$(PYTHON) -m virtualenv venv
-	source venv/bin/activate
-	$(PIP) install -U -r requirements.txt
-
 check:	style lint
 
 style:
