@@ -48,7 +48,7 @@ lint:
 	pylint $(SRCS)
 
 test:
-	pytest -v tests/test*.py
+	pytest -v tests
 
 exec:
 	cat data/easy.txt

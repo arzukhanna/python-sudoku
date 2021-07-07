@@ -1,23 +1,25 @@
 # PYTHON SUDOKU
 
-This program solves any problem to the sudoku puzzle.
+This program solves any problem to the [Sudoku puzzle](https://en.wikipedia.org/wiki/Sudoku).
 
-## Inputs
+## Input
 
-Text file with a grid representing the sudoku puzzle to be solved.
+A text file with a grid representing the sudoku puzzle to be solved.
 
-### Input Grid requirements
+### Grid
 
-(These requirements are tested using all functions ending in `_is_valid`).
+A valid grid is one that:
 
-* Grid containing a total of 81 integers in a 9x9 format
-* Integers must be in range `[0...9]`
-  * `0` - Empty cell that needs to be solved
-  * `[1...9]` - Cells that are already solved and must not be changed
-* Each row starts on a new line
-* No duplicate integers in any row, column or 3x3 cell
+* Contains a total of 81 integers in a 9x9 grid format
+* Integers represent a cell and must be in range `0` to `9`
+    * `0` - represents an empty cell that needs to be solved
+    * `1` to `9` - are cells that have been solved and must not change
+* Each row of the grid starts on a new line
+* There are no duplicate integers in any row, column or 3x3 cell
 
-#### Sample Input ([data/easy.txt](data/easy.txt))
+#### Example Easy Puzzle
+
+Source: [data/easy.txt](data/easy.txt)
 
 ```text
 0 2 0 3 5 0 0 8 4
@@ -33,10 +35,9 @@ Text file with a grid representing the sudoku puzzle to be solved.
 
 ## Output
 
-Solved sudoku puzzles with same dimensions as input with all 0's replaced with
-integers in range `[1...9]`.
+Solved sudoku puzzles with same dimensions as input with all `0`'s replaced with integers in range from `1` to `9`.
 
-#### Sample Output
+#### Example Solved Puzzle
 
 ```bash
 python3 solve_sudoku.py -p data/easy.txt
@@ -52,15 +53,12 @@ python3 solve_sudoku.py -p data/easy.txt
  [4 5 1 6 9 2 3 7 8]]
  ```
 
-
-
 ## Virtual Environment
 
-To specify the versions of the packages used, we set up a virtual environment
-for the project. This allows the project to be replicated without any dependency
-  conflicts.
+To specify the versions of the packages used, we set up a virtual environment for the project. This allows the project
+to be replicated without any dependency conflicts.
 
-### Setting Up Virtual Environment
+### Setup
 
 | Command | Description |
 | --------|-------------|
@@ -72,7 +70,7 @@ for the project. This allows the project to be replicated without any dependency
 |`pip list` |Shows all packages installed in the environment|
 |`deactivate` | Takes you out of the virtual environment and into the global environment|
 
-### Updating Python version used in Virtual Environment
+### Set Version of Python
 
 Command:
 
@@ -89,10 +87,11 @@ env/bin/python --version
 
 ## Makefile
 
-Makefiles are special format files that help build and manage projects
-automatically through use of `make`. The makefile used specifies the virtual
-environment set-up process which can be accessed using `make help`. The below
-tools are automatically run when the `make` command is run.
+Makefiles are special format files that help build and manage projects automatically through use of `make`. The makefile
+used specifies the virtual environment set-up process which can be accessed using `make help`. The tools below are
+automatically run when the `make` command is run.
+
+TODO Add a link to GNU Make documentation page. 
 
 ### Make Components
 
@@ -104,27 +103,42 @@ tools are automatically run when the `make` command is run.
 | [pylint](https://pypi.org/project/pylint/) | Static Code Checks |
 | [pytest](https://pypi.org/project/pylint/) | Unit Testing Framework |
 
-## Pipelines ([.gitlab-ci.yml](.gitlab-ci.yml))
+## Unit Testing
 
-Pipelines comprise:
-* Jobs: Define what and how to run. 
-* Stages: Define when to run the jobs. 
-  
-Configuring a pipeline: 
-* Add a YAML file called `.gitlab-ci.yml` to the project.
-* The YAML file will dictate the structure, and order of execution of the pipeline. 
-* When a `push` is made to the `origin` and GitLab finds a `.gitlab-ci.yml` file inside 
-  the repository root a Pipeline starts building automatically.
-  
+- [ ] TODO What tools are we using
+- [ ] TODO Example run
+
+## Pipelines
+
+### GitLab Pipelines
+
+A pipeline is declared using a YAML file, [.gitlab-ci.yml](.gitlab-ci.yml).
+
+A pipeline is comprised of:
+
+* Jobs: Define what and how to run.
+* Stages: Define when to run the jobs.
+
+To configuring a pipeline:
+
+* Add a YAML file called [.gitlab-ci.yml](.gitlab-ci.yml) to the project.
+* The YAML file will dictate the structure, and order of execution of the pipeline.
+* When a `push` is made to the `origin` and GitLab finds a `.gitlab-ci.yml` file inside the repository root a Pipeline
+  starts building automatically.
+
 ### Job Keywords used
+
 | Keyword | Description |
 | --------|-------------|
 | [before_script](https://docs.gitlab.com/ee/ci/yaml/#before_script) | Override a set of commands that are executed before job |
 | [cache](https://docs.gitlab.com/ee/ci/yaml/#cache) | List of files that should be cached between subsequent runs |
 | [image](https://docs.gitlab.com/ee/ci/yaml/#image) | Use Docker images |
 | [stage](https://docs.gitlab.com/ee/ci/yaml/#stage) | Defines a job stage (E.g., build) |
-| [variables](https://docs.gitlab.com/ee/ci/yaml/#variables) | 	Define job variables on a job level |
-  
+| [variables](https://docs.gitlab.com/ee/ci/yaml/#variables) | Define job variables on a job level |
+
+### GitHub Pipelines
+
+- [ ] TODO
 
 ## Requirements
 
@@ -135,4 +149,4 @@ Configuring a pipeline:
 * [Sudoku Code](https://www.youtube.com/watch?v=G_UYXzGuqvM)
 * [How to create a Virtual Environment](https://www.youtube.com/watch?v=N5vscPTWKOk)
 * [Make Guidelines](https://interrupt.memfault.com/blog/gnu-make-guidelines#when-to-choose-make)
-* [Pipelines](https://docs.gitlab.com/ee/ci/yaml/)
+* [GitLab Pipelines](https://docs.gitlab.com/ee/ci/yaml/)

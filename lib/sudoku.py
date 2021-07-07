@@ -63,7 +63,7 @@ def is_column_valid(column: list) -> bool:
     return is_row_valid(column)
 
 
-def is_cell_valid(cell_value: int) -> bool:
+def is_cell_valid(cell_value: str) -> bool:
     """
     For a cell to be valid, it should be an integer in the range [0...9]
     where 0 represents a cell that still needs to be solved (is empty),

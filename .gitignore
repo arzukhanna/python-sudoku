@@ -1,4 +1,5 @@
 .DS_Store
+.hypothesis/
 .idea/
 *.pyc
 __pycache__
