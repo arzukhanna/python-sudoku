@@ -85,13 +85,21 @@ python3 --version
 env/bin/python --version
 ```
 
+#### IDE should be set with correct venv
+
+Must ensure that the IDE is set with the appropriate venv, otherwise 
+false positives may occur where the IDE cannot run correctly - but 
+running `make` in the command line does. 
+
+Check the IDE venv by looking at the `python interpreter`.
+
 ## Makefile
 
 Makefiles are special format files that help build and manage projects automatically through use of `make`. The makefile
 used specifies the virtual environment set-up process which can be accessed using `make help`. The tools below are
 automatically run when the `make` command is run.
 
-TODO Add a link to GNU Make documentation page. 
+Source: [Make Guidelines](https://interrupt.memfault.com/blog/gnu-make-guidelines#when-to-choose-make)
 
 ### Make Components
 

@@ -24,11 +24,31 @@ def is_dimension_valid(grid: list) -> bool:
     """
     if len(grid) != 9:
         return False
-
     for row in grid:
         if len(row) != 9:
             return False
+    return True
 
+
+def no_duplicates(row: list) -> bool:
+    """Check row has no duplicates."""
+    _row = [i for i in row if i != 0]
+    return len(set(_row)) == len(_row)
+
+
+def no_letters(row: list) -> bool:
+    """Check does row have letter"""
+    for i in row:
+        if not isinstance(i, int):
+            return False
+    return True
+
+
+def no_wrong_integers(row: list) -> bool:
+    """Check does cell have integer out of correct range"""
+    for i in row:
+        if not 0 <= i <= 9:
+            return False
     return True
 
 
@@ -39,18 +59,7 @@ def is_row_valid(row: list) -> bool:
     :param row: Row in the sudoku puzzle.
     :return: TRUE if row is valid, FALSE otherwise.
     """
-    for cell in row:
-        if not is_cell_valid(cell):
-            return False
-
-    current_row = []
-    for i in row:
-        if i != 0:
-            current_row.append(i)
-    if len(set(current_row)) != len(current_row):
-        return False
-
-    return True
+    return all([no_duplicates(row), no_letters(row), no_wrong_integers(row)])
 
 
 def is_column_valid(column: list) -> bool:
@@ -61,25 +70,6 @@ def is_column_valid(column: list) -> bool:
     :return: TRUE if column is valid, FALSE otherwise.
     """
     return is_row_valid(column)
-
-
-def is_cell_valid(cell_value: str) -> bool:
-    """
-    For a cell to be valid, it should be an integer in the range [0...9]
-    where 0 represents a cell that still needs to be solved (is empty),
-    while the other cells have already been solved.
-    :param cell_value: Cell in the sudoku puzzle.
-    :return: TRUE if cell is valid, FALSE otherwise.
-    """
-    # 1. Check that cell is an integer
-    if not isinstance(cell_value, int):
-        return False
-
-    # 2. Check that cell contains integer in correct range
-    if not 0 <= cell_value <= 9:
-        return False
-
-    return True
 
 
 def is_grid_valid(grid: list) -> bool:
