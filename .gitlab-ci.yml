@@ -29,6 +29,7 @@ build:
     - flake8 *.py lib/*.py tests/*.py
     - pylint *.py lib/*.py tests/*.py
     - pytest -v tests
+    - pytest -v --cov=lib --cov-report term-missing tests/
     - cat data/easy.txt
     - python solve_sudoku.py -p data/easy.txt
     - python solve_sudoku.py -h

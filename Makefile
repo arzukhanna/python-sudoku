@@ -49,10 +49,11 @@ lint:
 
 test:
 	pytest -v tests
+	pytest -v --cov=lib --cov-report term-missing tests/
 
 exec:
 	cat data/easy.txt
-	$(PYTHON) solve_sudoku.py -p data/easy.txt
+	$(PYTHON) solve_sudoku.py data/easy.txt
 	$(PYTHON) solve_sudoku.py -h
 
 version:

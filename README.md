@@ -113,8 +113,53 @@ Source: [Make Guidelines](https://interrupt.memfault.com/blog/gnu-make-guideline
 
 ## Unit Testing
 
-- [ ] TODO What tools are we using
-- [ ] TODO Example run
+Known values are tested to known responses.The unit tests have been designed in a 
+way to test the functionality of each small component of the program. Specifically, 
+they test how the program handles both incorrect and correct inputs. Specific lists 
+have been created to be tested by the test functions which all begin with `test_`
+
+Example:
+```bash
+GOOD_LIST = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+LIST_WITH_DUPLICATES = [6, 5, 4, 1, 9, 8, 3, 7, 6]
+
+def test_grid_list_valid():
+    """Rows and columns valid"""
+    assert sudoku.is_row_valid(GOOD_LIST)
+    assert sudoku.is_column_valid(GOOD_LIST)
+
+
+def test_grid_list_duplicates_invalid():
+    """Row/Column has duplicates - invalid"""
+    assert not sudoku.no_duplicates(LIST_WITH_DUPLICATES)
+    assert not sudoku.no_duplicates(LIST_WITH_DUPLICATES)
+```
+
+### Hypothesis Testing 
+
+A type of property-based testing that verifies the program code using a large 
+range of relevant inputs. To use this, a list of valid and invalid inputs need to 
+be declared and stored in a variable from which the hypothesis tests generate a 
+random sample to test correctness of code.
+
+#### `@given`
+A decorator that takes a test function and turns it into a parametrized one which, 
+when called, runs the test over a wide range data matching the specified data type.
+* `sets` ensures that only one of each value in the specified range is used to 
+generate the random test.
+  
+* `sampled_from` specifies the list from which the values are randomly being chosen 
+from (initialised beforehand).
+
+
+Example:
+```bash
+VALID_SUDOKU_VALUES = list(range(1, 10))
+@given(sets(sampled_from(VALID_SUDOKU_VALUES), min_size=9, max_size=9))
+def test_has_correct_cells(row):
+    "Row has no letters or incorrect integers"
+    assert sudoku.no_letters(row) and sudoku.no_wrong_integers(row)
+```
 
 ## Pipelines
 
