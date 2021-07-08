@@ -8,8 +8,8 @@ from hypothesis.strategies import lists, sampled_from, sets
 from lib import sudoku
 
 VALID_SUDOKU_VALUES = list(range(1, 10))
-INVALID_SUDOKU_LETTERS = list(string.ascii_letters)
-INVALID_SUDOKU_INTEGERS = list(range(10, 100))
+INVALID_SUDOKU_LETTERS = list(string.ascii_letters) + VALID_SUDOKU_VALUES
+INVALID_SUDOKU_INTEGERS = list(range(10, 100)) + VALID_SUDOKU_VALUES
 
 
 @given(sets(sampled_from(VALID_SUDOKU_VALUES), min_size=9, max_size=9))
