@@ -8,14 +8,14 @@ SRCS	:= $(wildcard *.py **/*.py)
 
 .PHONY: all check clean help run setup tags test version
 
-default: check test exec
+default: check test run
 
 help:
 	@echo
 	@echo "Default goal: ${.DEFAULT_GOAL}"
 	@echo "  all:   check cover run test doc dist"
 	@echo "  check: check style and lint code"
-	@echo "  exec:  run against test data"
+	@echo "  run:	run against test data"
 	@echo "  test:  run unit tests"
 	@echo "  clean: delete all generated files"
 	@echo
@@ -48,10 +48,9 @@ lint:
 	pylint $(SRCS)
 
 test:
-	pytest -v tests
 	pytest -v --cov=lib --cov-report term-missing tests/
 
-exec:
+run:
 	cat data/easy.txt
 	$(PYTHON) solve_sudoku.py data/easy.txt
 	$(PYTHON) solve_sudoku.py -h
