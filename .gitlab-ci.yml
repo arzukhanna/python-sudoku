@@ -31,6 +31,6 @@ build:
     - pytest -v tests
     - pytest -v --cov=lib --cov-report term-missing tests/
     - cat data/easy.txt
-    - python solve_sudoku.py -p data/easy.txt
+    - python solve_sudoku.py data/easy.txt
     - python solve_sudoku.py -h
     - python solve_sudoku.py --version
