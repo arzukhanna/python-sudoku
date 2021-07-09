@@ -156,7 +156,7 @@ def next_empty(grid: list) -> (int, int):
     for _y in range(9):
         for _x in range(9):
             if grid[_y][_x] == 0:
-                log.debug("Next empty cell...%s", [_y][_x])
+                log.debug("Next empty cell...%s", (_y, _x))
                 return _y, _x
     log.debug("There are no more empty cells to fill!")
     return None, None
