@@ -108,10 +108,6 @@ def is_grid_valid(grid: list) -> bool:
     return True
 
 
-# def can_go_in_row(grid, _y: int, _x: int, _n: int):
-
-
-
 def possible(grid, _y: int, _x: int, _n: int) -> bool:
     """
     Function: Determines whether inputting n in a particular cell (grid[y][x])
