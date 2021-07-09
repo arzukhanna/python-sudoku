@@ -155,11 +155,66 @@ from (initialised beforehand).
 Example:
 ```python
 VALID_SUDOKU_VALUES = list(range(1, 10))
+
 @given(sets(sampled_from(VALID_SUDOKU_VALUES), min_size=9, max_size=9))
 def test_has_correct_cells(row):
     "Row has no letters or incorrect integers"
     assert sudoku.no_letters(row) and sudoku.no_wrong_integers(row)
 ```
+
+## Logging
+
+The process of collecting information about events that occur in the operating system.
+software of in communication. 
+
+In enterprises, logging is used to:
+
+1. Monitor behaviour (and apply automatic responses on some activity)
+2. Help diagnose problems in an environment
+3. Trace activity (E.g., transactions across many services)
+
+### Logging Levels 
+
+Levels are used for identifying the severity of an event. There are six logging levels:
+1. CRITICAL
+2. ERROR
+3. WARNING
+4. INFO
+5. DEBUG
+6. NOTSET
+
+INFO level is often set as the default level. This program predominantly uses the 
+debug level.
+
+### Setting Configuration in Main Program
+
+```python
+logging.basicConfig(
+    filename="test.log",
+    format="%(asctime)s:%(levelname)s:%(message)s",
+    level = logging.INFO
+)
+
+logger = logging.getLogger(__name__)
+
+if verbose:
+    logger.setLevel(logging.DEBUG)
+```
+
+### Setting up for lib functions 
+
+```python 
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
+```
+
+#### Parameters used
+
+* `basicConfig()` configures the root logger
+* `filename` writes the logs to a file called `test.log`
+* `format` specifies the format in which each log is printed into the file
+* `level = logging.INFO` means the logging will have a default logging of info 
+* `logging.getLogger` creates a new logger
 
 ## Pipelines
 
@@ -203,3 +258,5 @@ To configuring a pipeline:
 * [How to create a Virtual Environment](https://www.youtube.com/watch?v=N5vscPTWKOk)
 * [Make Guidelines](https://interrupt.memfault.com/blog/gnu-make-guidelines#when-to-choose-make)
 * [GitLab Pipelines](https://docs.gitlab.com/ee/ci/yaml/)
+* [Python Logging](https://zetcode.com/python/logging/)
+* [Logging HOWTO](https://docs.python.org/3/howto/logging.html)

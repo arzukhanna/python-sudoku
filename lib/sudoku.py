@@ -3,8 +3,6 @@ Library program to solve Sudoku puzzles.
 Author: Arzu Khanna
 """
 
-# pylint: disable = R1729
-
 import logging
 
 log = logging.getLogger()
