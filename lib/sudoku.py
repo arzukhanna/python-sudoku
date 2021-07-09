@@ -108,40 +108,66 @@ def is_grid_valid(grid: list) -> bool:
     return True
 
 
-def possible(grid, _y: int, _x: int, _n: int) -> bool:
+def possible_in_row(row: list, _n: int) -> bool:
+    """
+    Determines whether _n can go in particular row. This is if _n
+    doesn't already exist in the row.
+    """
+    possible_row = _n not in row
+    if not possible_row:
+        log.debug("_n already in current row - not a possible move")
+    return possible_row
+
+
+def possible_in_column(column: list, _n: int) -> bool:
+    """
+    Determines whether _n can go in particular column. This is if _n
+    doesn't already exist in the column.
+    """
+    possible_column = _n not in column
+    if not possible_column:
+        log.debug("_n already in current column - not a possible move")
+    return possible_column
+
+
+def possible_in_block(block: list, _n: int) -> bool:
+    """
+    Determines whether _n can go in particular block. This is if _n
+    doesn't already exist in the block.
+    """
+    possible_block = _n not in block
+    if not possible_block:
+        log.debug("_n already in current block - not possible move")
+    return possible_block
+
+
+def possible(grid: list, _y: int, _x: int, _n: int) -> bool:
     """
     Function: Determines whether inputting n in a particular cell (grid[y][x])
     is possible according to sudoku rules.
-    :param grid: The current state of sudoku puzzle.
+    :param grid: Current state of sudoku puzzle.
     :param _y: Row
     :param _x: Column
     :param _n: Number in cell
     :return: TRUE if possible for n to go in cell, FALSE otherwise.
     """
-    # 1. Check if _n is already in row _y
-    if _n in grid[_y]:
-        log.debug("_n is already in current row - not a possible move")
-        return False
-
-    # 2. Check if _n is already in column _x
+    row = grid[_y]
     transposed_grid = list(map(list, zip(*grid)))
-    if _n in transposed_grid[_x]:
-        log.debug("_n is already in current column - not a possible move")
-        return False
-
-    # 3. Check if _n is already in 3x3 block
+    column = transposed_grid[_x]
+    block = []
     _x0 = (_x // 3) * 3
     _y0 = (_y // 3) * 3
     for i in range(3):
         for j in range(3):
-            if grid[_y0 + i][_x0 + j] == _n:
-                log.debug("_n is already in current block - not possible move")
-                return False
+            block.append(grid[_y0 + i][_x0 + j])
 
-    # If _n is not in row _y, column _x, or 3x3 block where grid[_y][_x],
-    # then the move is possible and return True.
-    log.debug("Placing _n is a possible move!")
-    return True
+    return all(
+        [
+            possible_in_row(row, _n),
+            possible_in_column(column, _n),
+            possible_in_block(block, _n),
+        ]
+    )
 
 
 def next_empty(grid: list) -> (int, int):

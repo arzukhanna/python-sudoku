@@ -22,7 +22,7 @@ INCORRECT_DIMENSIONS_GRID = [
     [9, 6, 3, 5, 2, 7, 8, 4, 1],
 ]
 
-GOOD_LIST = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+GOOD_LIST = [0, 2, 3, 4, 5, 6, 7, 8, 9]
 LIST_WITH_DUPLICATES = [6, 5, 4, 1, 9, 8, 3, 7, 6]
 LIST_WITH_LETTER = [0, 1, 2, "a", 8, 9, 0, 0, 0, 0]
 LIST_WITH_INTEGER_OUTSIDE_RANGE = [0, 1, 2, 10, 8, 9, 0, 0, 0, 0]
@@ -62,3 +62,33 @@ def test_grid_list_cell_outside_range_invalid():
 def test_is_grid_valid():
     """Entire grid is valid"""
     assert sudoku.is_grid_valid(GOOD_GRID)
+
+
+def test_possible_in_row():
+    """n is a possible move in the row"""
+    assert sudoku.possible_in_row(GOOD_LIST, 1)
+
+
+def test_not_possible_in_row():
+    """n is not a possible move in the row"""
+    assert not sudoku.possible_in_row(GOOD_LIST, 2)
+
+
+def test_possible_in_column():
+    """n is a possible move in the column"""
+    assert sudoku.possible_in_row(GOOD_LIST, 1)
+
+
+def test_not_possible_in_column():
+    """n is not a possible move in the column"""
+    assert not sudoku.possible_in_row(GOOD_LIST, 2)
+
+
+def test_possible_in_block():
+    """n is a possible move in the block"""
+    assert sudoku.possible_in_block(GOOD_LIST, 1)
+
+
+def test_not_possible_in_block():
+    """n is not a possible move in the block"""
+    assert not sudoku.possible_in_block(GOOD_LIST, 2)
