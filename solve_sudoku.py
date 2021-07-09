@@ -5,6 +5,7 @@ Author: Arzu Khanna
 """
 
 import argparse
+import logging
 import sys
 
 import numpy
@@ -28,9 +29,28 @@ if __name__ == "__main__":
 
     parser.add_argument("--version", action="version", version=__version__)
 
+    parser.add_argument("-verbose", help="verbose output", action="count")
+
     args = parser.parse_args()
+    prog = parser.prog
+    verbose = args.verbose
 
     grid = read_grid(args.puzzle)
+
+    logging.basicConfig(
+        filename="test.log",
+        filemode="w",
+        format="%(asctime)s:%(levelname)s:%(message)s",
+    )
+
+    logger = logging.getLogger(__name__)
+
+    if verbose:
+        logger.setLevel(logging.DEBUG)
+
+    logger.debug("prog ........................: %s", prog)
+    logger.debug("verbose .....................: %s", verbose)
+    logger.debug("version .....................: %s", __version__)
 
     if is_grid_valid(grid):
         solve_puzzle(grid)

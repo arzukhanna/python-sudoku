@@ -31,7 +31,6 @@ help:
 	@echo
 	@echo "deactivate"
 	@echo
-	@$(PYTHON) wordpuzzle.py -h
 
 check:	style lint
 

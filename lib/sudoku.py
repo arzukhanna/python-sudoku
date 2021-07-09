@@ -3,6 +3,11 @@ Library program to solve Sudoku puzzles.
 Author: Arzu Khanna
 """
 
+import logging
+
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
+
 
 def read_grid(file: str) -> list:
     """
@@ -12,6 +17,7 @@ def read_grid(file: str) -> list:
     grid = []
     for line in file:
         grid.append([int(n) for n in line.split()])
+    log.debug("read in grid.....:%s", grid)
     return grid
 
 
@@ -23,10 +29,13 @@ def is_dimension_valid(grid: list) -> bool:
     :return: TRUE if dimensions are valid, FALSE otherwise.
     """
     if len(grid) != 9:
+        log.debug("Dimensions invalid, number of rows....:%s", len(grid))
         return False
     for row in grid:
         if len(row) != 9:
+            log.debug("Dimensions invalid, number of columns....:%s", len(row))
             return False
+    log.debug("dimensions are valid, 9x9 grid")
     return True
 
 

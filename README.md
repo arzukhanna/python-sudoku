@@ -119,7 +119,7 @@ they test how the program handles both incorrect and correct inputs. Specific li
 have been created to be tested by the test functions which all begin with `test_`
 
 Example:
-```bash
+```python
 GOOD_LIST = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 LIST_WITH_DUPLICATES = [6, 5, 4, 1, 9, 8, 3, 7, 6]
 
@@ -153,7 +153,7 @@ from (initialised beforehand).
 
 
 Example:
-```bash
+```python
 VALID_SUDOKU_VALUES = list(range(1, 10))
 @given(sets(sampled_from(VALID_SUDOKU_VALUES), min_size=9, max_size=9))
 def test_has_correct_cells(row):
