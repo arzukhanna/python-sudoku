@@ -37,7 +37,7 @@ def test_has_duplicates(row):
 
 
 @given(sets(sampled_from(INVALID_SUDOKU_LETTERS), min_size=9, max_size=9))
-def test_has_letter(row: [str]) -> None:
+def test_has_letter(row):
     """Row has a letter."""
     assert not sudoku.no_letters(row)
 

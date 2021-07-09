@@ -3,6 +3,8 @@ Library program to solve Sudoku puzzles.
 Author: Arzu Khanna
 """
 
+# pylint: disable = R1729
+
 import logging
 
 log = logging.getLogger()
@@ -17,7 +19,6 @@ def read_grid(file: str) -> list:
     grid = []
     for line in file:
         grid.append([int(n) for n in line.split()])
-    log.debug("read in grid.....:%s", grid)
     return grid
 
 
@@ -35,30 +36,30 @@ def is_dimension_valid(grid: list) -> bool:
         if len(row) != 9:
             log.debug("Dimensions invalid, number of columns....:%s", len(row))
             return False
-    log.debug("dimensions are valid, 9x9 grid")
+    log.debug("Dimensions are valid, 9x9 grid")
     return True
 
 
 def no_duplicates(row: list) -> bool:
     """Check row has no duplicates."""
     _row = [i for i in row if i != 0]
-    return len(set(_row)) == len(_row)
+    duplicates = len(set(_row)) != len(_row)
+    log.debug("No duplicates in row/column...%s", not duplicates)
+    return not duplicates
 
 
 def no_letters(row: list) -> bool:
     """Check does row have letter"""
-    for i in row:
-        if not isinstance(i, int):
-            return False
-    return True
+    no_letter = all(isinstance(i, int) for i in row)
+    log.debug("No letters in row/column...%s", no_letter)
+    return no_letter
 
 
 def no_wrong_integers(row: list) -> bool:
     """Check does cell have integer out of correct range"""
-    for i in row:
-        if not 0 <= i <= 9:
-            return False
-    return True
+    no_wrong_integer = all(0 <= i <= 9 for i in row)
+    log.debug("No wrong integers in row/column...%s", no_wrong_integer)
+    return no_wrong_integer
 
 
 def is_row_valid(row: list) -> bool:
@@ -68,7 +69,9 @@ def is_row_valid(row: list) -> bool:
     :param row: Row in the sudoku puzzle.
     :return: TRUE if row is valid, FALSE otherwise.
     """
-    return all([no_duplicates(row), no_letters(row), no_wrong_integers(row)])
+    valid = all([no_duplicates(row), no_letters(row), no_wrong_integers(row)])
+    log.debug("Row/column is valid...%s", valid)
+    return valid
 
 
 def is_column_valid(column: list) -> bool:
@@ -103,6 +106,7 @@ def is_grid_valid(grid: list) -> bool:
         if not is_column_valid(column):
             return False
 
+    log.debug("Entire grid is valid!")
     return True
 
 
@@ -119,11 +123,13 @@ def possible(grid, _y: int, _x: int, _n: int) -> bool:
     # 1. Check if _n is already in row _y
     for i in range(9):
         if grid[_y][i] == _n:
+            log.debug("_n is already in current row - not a possible move")
             return False
 
     # 2. Check if _n is already in column _x
     for i in range(9):
         if grid[i][_x] == _n:
+            log.debug("_n is already in current column - not a possible move")
             return False
 
     # 3. Check if _n is already in 3x3 block
@@ -132,10 +138,12 @@ def possible(grid, _y: int, _x: int, _n: int) -> bool:
     for i in range(3):
         for j in range(3):
             if grid[_y0 + i][_x0 + j] == _n:
+                log.debug("_n is already in current block - not possible move")
                 return False
 
     # If _n is not in row _y, column _x, or 3x3 block where grid[_y][_x],
     # then the move is possible and return True.
+    log.debug("Placing _n is a possible move!")
     return True
 
 
@@ -148,7 +156,9 @@ def next_empty(grid: list) -> (int, int):
     for _y in range(9):
         for _x in range(9):
             if grid[_y][_x] == 0:
+                log.debug("Next empty cell...%s", [_y][_x])
                 return _y, _x
+    log.debug("There are no more empty cells to fill!")
     return None, None
 
 

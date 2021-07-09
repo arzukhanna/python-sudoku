@@ -47,18 +47,15 @@ def test_grid_list_valid():
 def test_grid_list_duplicates_invalid():
     """Row/Column has duplicates - invalid"""
     assert not sudoku.no_duplicates(LIST_WITH_DUPLICATES)
-    assert not sudoku.no_duplicates(LIST_WITH_DUPLICATES)
 
 
 def test_grid_list_cell_letter_invalid():
     """Row/Column has a letter - invalid"""
     assert not sudoku.no_letters(LIST_WITH_LETTER)
-    assert not sudoku.no_letters(LIST_WITH_LETTER)
 
 
 def test_grid_list_cell_outside_range_invalid():
     """Row/Column has a cell outside the range - invalid"""
-    assert not sudoku.no_wrong_integers(LIST_WITH_INTEGER_OUTSIDE_RANGE)
     assert not sudoku.no_wrong_integers(LIST_WITH_INTEGER_OUTSIDE_RANGE)
 
 

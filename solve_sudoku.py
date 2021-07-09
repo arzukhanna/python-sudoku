@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     parser.add_argument("--version", action="version", version=__version__)
 
-    parser.add_argument("-verbose", help="verbose output", action="count")
+    parser.add_argument("-v", "--verbose", help="verbose", action="count")
 
     args = parser.parse_args()
     prog = parser.prog
@@ -53,8 +53,8 @@ if __name__ == "__main__":
     logger.debug("version .....................: %s", __version__)
 
     if is_grid_valid(grid):
-        solve_puzzle(grid)
-        print(numpy.matrix(grid))
+        if solve_puzzle(grid):
+            print(numpy.matrix(grid))
     else:
         parser.print_help(sys.stderr)
         sys.exit(1)
