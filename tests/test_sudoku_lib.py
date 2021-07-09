@@ -59,6 +59,6 @@ def test_grid_list_cell_outside_range_invalid():
     assert not sudoku.no_wrong_integers(LIST_WITH_INTEGER_OUTSIDE_RANGE)
 
 
-def test_solved_puzzle_correctly():
-    """Puzzle solved correctly."""
+def test_is_grid_valid():
+    """Entire grid is valid"""
     assert sudoku.is_grid_valid(GOOD_GRID)

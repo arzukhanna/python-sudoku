@@ -108,6 +108,10 @@ def is_grid_valid(grid: list) -> bool:
     return True
 
 
+# def can_go_in_row(grid, _y: int, _x: int, _n: int):
+
+
+
 def possible(grid, _y: int, _x: int, _n: int) -> bool:
     """
     Function: Determines whether inputting n in a particular cell (grid[y][x])
@@ -119,16 +123,15 @@ def possible(grid, _y: int, _x: int, _n: int) -> bool:
     :return: TRUE if possible for n to go in cell, FALSE otherwise.
     """
     # 1. Check if _n is already in row _y
-    for i in range(9):
-        if grid[_y][i] == _n:
-            log.debug("_n is already in current row - not a possible move")
-            return False
+    if _n in grid[_y]:
+        log.debug("_n is already in current row - not a possible move")
+        return False
 
     # 2. Check if _n is already in column _x
-    for i in range(9):
-        if grid[i][_x] == _n:
-            log.debug("_n is already in current column - not a possible move")
-            return False
+    transposed_grid = list(map(list, zip(*grid)))
+    if _n in transposed_grid[_x]:
+        log.debug("_n is already in current column - not a possible move")
+        return False
 
     # 3. Check if _n is already in 3x3 block
     _x0 = (_x // 3) * 3
