@@ -30,14 +30,14 @@ if __name__ == "__main__":
 
     parser.add_argument("--version", action="version", version=__version__)
 
-    parser.add_argument("-v", "--verbose", help="verbose", action="count")
+    parser.add_argument("-v", "--verbose", action="store_true")
 
     args = parser.parse_args()
     prog = parser.prog
     verbose = args.verbose
 
     logging.config.fileConfig(fname="log.config")
-    logger = logging.getLogger("dev")
+    logger = logging.getLogger()
 
     if verbose:
         logger.setLevel(logging.DEBUG)

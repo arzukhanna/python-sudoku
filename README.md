@@ -40,7 +40,7 @@ Solved sudoku puzzles with same dimensions as input with all `0`'s replaced with
 #### Example Solved Puzzle
 
 ```bash
-python3 solve_sudoku.py -p data/easy.txt
+python3 solve_sudoku.py data/easy.txt
 
 [[6 2 7 3 5 1 9 8 4]
  [8 1 3 4 6 9 2 5 7]
@@ -189,13 +189,13 @@ debug level.
 ### Setting Configuration in Main Program
 
 ```python
+logger = logging.getLogger()
+
 logging.basicConfig(
     filename="test.log",
     format="%(asctime)s:%(levelname)s:%(message)s",
     level = logging.INFO
 )
-
-logger = logging.getLogger(__name__)
 
 if verbose:
     logger.setLevel(logging.DEBUG)

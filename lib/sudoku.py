@@ -33,7 +33,8 @@ def is_dimension_valid(a_list: list) -> bool:
 
 
 def no_duplicates(row: list) -> bool:
-    """Check row has no duplicates."""
+    """Check row has no duplicates.
+    :param row: row in puzzle"""
     _row = [i for i in row if i != 0]
     duplicates = len(set(_row)) != len(_row)
     log.debug("No duplicates in row/column...%s", not duplicates)
@@ -41,14 +42,16 @@ def no_duplicates(row: list) -> bool:
 
 
 def no_letters(row: list) -> bool:
-    """Check does row have letter"""
+    """Check does row have letter
+    :param row: row in puzzle"""
     no_letter = all(isinstance(i, int) for i in row)
     log.debug("No letters in row/column...%s", no_letter)
     return no_letter
 
 
 def no_wrong_integers(row: list) -> bool:
-    """Check does cell have integer out of correct range"""
+    """Check does cell have integer out of correct range
+    :param row: row in puzzle"""
     no_wrong_integer = all(0 <= i <= 9 for i in row)
     log.debug("No wrong integers in row/column...%s", no_wrong_integer)
     return no_wrong_integer
@@ -108,6 +111,7 @@ def can_move(puzzle_list: list, _n: int) -> bool:
     """
     Determines whether _n can go in particular row/column/block.
     This is if _n doesn't already exist in the row/column/block.
+    :param: list representing a row, column or block in the puzzle
     """
     return _n not in puzzle_list
 
@@ -115,6 +119,10 @@ def can_move(puzzle_list: list, _n: int) -> bool:
 def convert_block_to_list(grid: list, _y: int, _x: int) -> list:
     """
     Converts a 3x3 block into a list format.
+    :param grid: Current state of sudoku puzzle.
+    :param _y: Row
+    :param _x: Column
+    :return: list representing numbers in the 3x3 block
     """
     block = []
     _x0 = (_x // 3) * 3
