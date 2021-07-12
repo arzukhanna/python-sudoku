@@ -6,6 +6,7 @@ Author: Arzu Khanna
 
 import argparse
 import logging
+import logging.config
 import sys
 
 import numpy
@@ -35,16 +36,8 @@ if __name__ == "__main__":
     prog = parser.prog
     verbose = args.verbose
 
-    grid = read_grid(args.puzzle)
-
-    logging.basicConfig(
-        filename="test.log",
-        filemode="w",
-        format="%(asctime)s:%(levelname)s:%(message)s",
-        level=logging.INFO,
-    )
-
-    logger = logging.getLogger(__name__)
+    logging.config.fileConfig(fname="log.config")
+    logger = logging.getLogger("dev")
 
     if verbose:
         logger.setLevel(logging.DEBUG)
@@ -52,6 +45,8 @@ if __name__ == "__main__":
     logger.debug("prog ........................: %s", prog)
     logger.debug("verbose .....................: %s", verbose)
     logger.debug("version .....................: %s", __version__)
+
+    grid = read_grid(args.puzzle)
 
     if is_grid_valid(grid):
         if solve_puzzle(grid):
