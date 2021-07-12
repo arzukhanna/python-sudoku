@@ -20,21 +20,15 @@ def read_grid(file: str) -> list:
     return grid
 
 
-def is_dimension_valid(grid: list) -> bool:
+def is_dimension_valid(a_list: list) -> bool:
     """
     To have valid dimensions, the grid has to be a 2 dimensional array
     with 9 rows and 9 columns.
-    :param grid: List of lists representing sudoku puzzle.
+    :param a_list: List in sudoku puzzle
     :return: TRUE if dimensions are valid, FALSE otherwise.
     """
-    if len(grid) != 9:
-        log.debug("Dimensions invalid, number of rows....:%s", len(grid))
+    if len(a_list) != 9:
         return False
-    for row in grid:
-        if len(row) != 9:
-            log.debug("Dimensions invalid, number of columns....:%s", len(row))
-            return False
-    log.debug("Dimensions are valid, 9x9 grid")
     return True
 
 
@@ -67,7 +61,14 @@ def is_row_valid(row: list) -> bool:
     :param row: Row in the sudoku puzzle.
     :return: TRUE if row is valid, FALSE otherwise.
     """
-    valid = all([no_duplicates(row), no_letters(row), no_wrong_integers(row)])
+    valid = all(
+        [
+            no_duplicates(row),
+            no_letters(row),
+            no_wrong_integers(row),
+            is_dimension_valid(row),
+        ]
+    )
     log.debug("Row/column is valid...%s", valid)
     return valid
 
@@ -88,57 +89,40 @@ def is_grid_valid(grid: list) -> bool:
     :param grid: List of lists representing sudoku puzzle.
     :return: TRUE if grid is valid, FALSE otherwise.
     """
-    # 1. Check if dimensions of grid are valid
-    if not is_dimension_valid(grid):
-        return False
-
-    # 2. Iterate through all rows to check if valid
     for row in grid:
         if not is_row_valid(row):
+            log.debug("Row dimensions are invalid:%s")
             return False
 
-    # 3. Iterate through all columns to check if valid
-    # Transpose grid so that columns can be treated as rows.
     transposed_grid = map(list, zip(*grid))
     for column in transposed_grid:
         if not is_column_valid(column):
+            log.debug("Column dimensions are invalid:%s")
             return False
 
     log.debug("Entire grid is valid!")
     return True
 
 
-def possible_in_row(row: list, _n: int) -> bool:
+def can_move(puzzle_list: list, _n: int) -> bool:
     """
-    Determines whether _n can go in particular row. This is if _n
-    doesn't already exist in the row.
+    Determines whether _n can go in particular row/column/block.
+    This is if _n doesn't already exist in the row/column/block.
     """
-    possible_row = _n not in row
-    if not possible_row:
-        log.debug("_n already in current row - not a possible move")
-    return possible_row
+    return _n not in puzzle_list
 
 
-def possible_in_column(column: list, _n: int) -> bool:
+def convert_block_to_list(grid: list, _y: int, _x: int) -> list:
     """
-    Determines whether _n can go in particular column. This is if _n
-    doesn't already exist in the column.
+    Converts a 3x3 block into a list format.
     """
-    possible_column = _n not in column
-    if not possible_column:
-        log.debug("_n already in current column - not a possible move")
-    return possible_column
-
-
-def possible_in_block(block: list, _n: int) -> bool:
-    """
-    Determines whether _n can go in particular block. This is if _n
-    doesn't already exist in the block.
-    """
-    possible_block = _n not in block
-    if not possible_block:
-        log.debug("_n already in current block - not possible move")
-    return possible_block
+    block = []
+    _x0 = (_x // 3) * 3
+    _y0 = (_y // 3) * 3
+    for i in range(3):
+        for j in range(3):
+            block.append(grid[_y0 + i][_x0 + j])
+    return block
 
 
 def possible(grid: list, _y: int, _x: int, _n: int) -> bool:
@@ -151,23 +135,12 @@ def possible(grid: list, _y: int, _x: int, _n: int) -> bool:
     :param _n: Number in cell
     :return: TRUE if possible for n to go in cell, FALSE otherwise.
     """
-    row = grid[_y]
+    rows = grid[_y]
     transposed_grid = list(map(list, zip(*grid)))
     column = transposed_grid[_x]
-    block = []
-    _x0 = (_x // 3) * 3
-    _y0 = (_y // 3) * 3
-    for i in range(3):
-        for j in range(3):
-            block.append(grid[_y0 + i][_x0 + j])
+    block = convert_block_to_list(grid, _y, _x)
 
-    return all(
-        [
-            possible_in_row(row, _n),
-            possible_in_column(column, _n),
-            possible_in_block(block, _n),
-        ]
-    )
+    return all([can_move(rows, _n), can_move(column, _n), can_move(block, _n)])
 
 
 def next_empty(grid: list) -> (int, int):
@@ -190,6 +163,7 @@ def solve_puzzle(grid: list) -> bool:
     Function: Solve the sudoku puzzle
     :param grid: current state of sudoku puzzle
     """
+
     _y, _x = next_empty(grid)
 
     if _y is None:
