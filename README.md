@@ -281,6 +281,9 @@ To configuring a pipeline:
   $ git push -u github feature
   ```
 
+* In GitHub, protect develop and main branches. These are long-lived and 
+  should be "protected". ( Settings > Branches)
+
 #### Pipelines
 
 ## Requirements
@@ -296,3 +299,5 @@ To configuring a pipeline:
 * [Python Logging](https://zetcode.com/python/logging/)
 * [Logging HOWTO](https://docs.python.org/3/howto/logging.html)
 * [Working with GIT remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes)
+* [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions)
+* [Migrating from GitLab CI/CD to GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/migrating-from-gitlab-cicd-to-github-actions)

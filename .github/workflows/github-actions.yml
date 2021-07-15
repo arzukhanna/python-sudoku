@@ -1,0 +1,61 @@
+---
+
+name: Python application
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: cache
+        uses: actions/cache@v2
+        with:
+          path: venv
+          key: $GITHUB_REF
+
+      - name: setup
+        run: |
+          python -V
+          python -m pip install --upgrade pip virtualenv
+          python -m virtualenv venv
+          source venv/bin/activate
+          pip install -U -r requirements.txt
+          flake8 --version
+          pylint --version
+          black --version
+          echo isort $(isort --version-number)
+
+      - name: check
+        run: |
+          source venv/bin/activate
+          isort --check --diff *.py lib/*.py tests/*.py
+          black --check *.py lib/*.py tests/*.py
+          flake8 *.py lib/*.py tests/*.py
+          pylint *.py lib/*.py tests/*.py
+          python setup.py check
+
+      - name: test
+        run: |
+          source venv/bin/activate
+          pytest -v --cov-report term-missing --cov=lib tests/
+
+      - name: run
+        run: |
+          source venv/bin/activate
+          python -m solve_sudoku.py -h
+          python -m solve_sudoku.py --version
+          python -m solve_sudoku.py -v tests/test.py
