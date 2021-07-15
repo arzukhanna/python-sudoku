@@ -272,12 +272,15 @@ To configuring a pipeline:
 
 * Force push main branch from GitLab to GitHub
   ```bash
+  $ git checkout main
   $ git push -fu github main
   ```
   
 * Push develop and feature branch from GitLab to GitHub
   ```bash
+  $ git checkout develop
   $ git push -u github develop
+  $ git checkout feature
   $ git push -u github feature
   ```
 

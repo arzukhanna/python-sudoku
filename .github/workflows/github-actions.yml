@@ -7,6 +7,8 @@ on:
     branches:
       - main
       - develop
+      - 4-duplicate-project-on-github
+      - 'feature/*'
 
 jobs:
 
@@ -48,6 +50,7 @@ jobs:
           pylint *.py lib/*.py tests/*.py
 
       - name: test
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         run: |
           source venv/bin/activate
           pytest -v --cov-report term-missing --cov=lib tests/
