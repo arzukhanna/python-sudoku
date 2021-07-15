@@ -75,7 +75,7 @@ python3 solve_sudoku.py data/easy.txt
  [4 5 1 6 9 2 3 7 8]]
  ```
 
-#### Example Wrong Input given
+#### Example output when wrong file type given
 
 Source: [data/invalid_file](data/invalid_file)
 
