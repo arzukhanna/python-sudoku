@@ -2,13 +2,7 @@
 
 name: Python application
 
-on:
-  push:
-    branches:
-      - main
-      - develop
-      - 4-duplicate-project-on-github
-      - 'feature/*'
+on: push
 
 jobs:
 
@@ -56,8 +50,9 @@ jobs:
           pytest -v --cov-report term-missing --cov=lib tests/
 
       - name: run
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         run: |
           source venv/bin/activate
-          python -m solve_sudoku.py -h
-          python -m solve_sudoku.py --version
-          python -m solve_sudoku.py -v tests/test.py
+          python -m solve_sudoku -h
+          python -m solve_sudoku --version
+          python -m solve_sudoku -v tests/*.py
