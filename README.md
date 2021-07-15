@@ -289,8 +289,8 @@ To configuring a pipeline:
 
 ### Pipelines
 
-A pipeline is declared using a YAML file, [.github-actions.yml](.github-actions.yml) 
-which is stored in a new directory [.github/workflows/](.github/workflows/).
+A pipeline is declared using a YAML file, [.python.yml](.github/workflows/python.yml) 
+which is stored in a new directory [.github/workflows/](.github/workflows).
 
 #### Workflow Commands 
 
@@ -302,6 +302,7 @@ which is stored in a new directory [.github/workflows/](.github/workflows/).
 | runs-on: ubuntu-latest | Configures the job to run on an Ubuntu Linux runner (The job will execute on a fresh virtual machine hosted by GitHub.|
 | steps |  Groups together all steps. Each nested item is a separate action / shell command.|
 | cache | Manually caches workflow files. |
+| `if: github.ref == 'refs/heads/main` | Will only run if on main branch. | 
 
 
 ## Requirements
