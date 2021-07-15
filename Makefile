@@ -52,6 +52,8 @@ test:
 run:
 	cat data/easy.txt
 	$(PYTHON) solve_sudoku.py data/easy.txt
+	$(PYTHON) solve_sudoku.py data/easy.json
+	$(PYTHON) solve_sudoku.py -v data/easy.txt
 	$(PYTHON) solve_sudoku.py -h
 
 version:
@@ -68,5 +70,7 @@ clean:
 	-$(RM) -v MANIFEST
 	-$(RM) -v **/*.pyc **/*.pyo **/*.py,cover
 	-$(RM) -v *.pyc *.pyo *.py,cover
+	-$(RM) -f *.log
+	-$(RM) -f *.log.*
 
 #EOF

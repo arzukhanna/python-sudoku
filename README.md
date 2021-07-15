@@ -186,35 +186,47 @@ Levels are used for identifying the severity of an event. There are six logging 
 INFO level is often set as the default level. This program predominantly uses the 
 debug level.
 
-### Setting Configuration in Main Program
+### Properties used:
 
-```python
+Source: [log.properties](log.properties)
+
+`[logger_root]`
+
+  * `level = INFO` (default level is INFO)
+  * `handlers = console,file` (logs handled in both file and console)
+
+`[handler_file]`
+  * `class = logging.handlers.RotatingFileHandler(filename, mode = 'a', maxBytes, 
+    backupCount)`
+  * Allows the file to rollover at a predetermined size. When size (maxBytes) is about 
+    to be exceeded, file is closed and new file is silently opened for output.
+  * backupCount must be at least 1 for rollover to occur.
+
+`[handler_console]`
+  * `class = StreamHandler(sys.stdout,)`
+  * Sends logging output to sys.stdout
+
+`[formatter_default]`
+  * `format=%(asctime)s:%(levelname)s:%(message)s`
+  * Specifies format of output. Used for both file and console handling.
+
+### Set-up in Main Program
+
+```python 
+logging.config.fileConfig(
+  fname="log.properties", defaults={"logfilename": "sudoku.log"})
+
 logger = logging.getLogger()
-
-logging.basicConfig(
-    filename="test.log",
-    format="%(asctime)s:%(levelname)s:%(message)s",
-    level = logging.INFO
-)
 
 if verbose:
     logger.setLevel(logging.DEBUG)
 ```
 
-### Setting up for lib functions 
+### Set-up in Lib Program
 
 ```python 
 log = logging.getLogger()
-log.setLevel(logging.DEBUG)
 ```
-
-#### Parameters used
-
-* `basicConfig()` configures the root logger
-* `filename` writes the logs to a file called `test.log`
-* `format` specifies the format in which each log is printed into the file
-* `level = logging.INFO` means the logging will have a default logging of info 
-* `logging.getLogger` creates a new logger
 
 ## Pipelines
 

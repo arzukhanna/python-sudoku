@@ -5,7 +5,6 @@ Author: Arzu Khanna
 """
 
 import argparse
-import logging
 import logging.config
 import sys
 
@@ -36,7 +35,9 @@ if __name__ == "__main__":
     prog = parser.prog
     verbose = args.verbose
 
-    logging.config.fileConfig(fname="log.config")
+    logging.config.fileConfig(
+        fname="log.properties", defaults={"logfilename": "sudoku.log"}
+    )
     logger = logging.getLogger()
 
     if verbose:
@@ -48,9 +49,8 @@ if __name__ == "__main__":
 
     grid = read_grid(args.puzzle)
 
-    if is_grid_valid(grid):
-        if solve_puzzle(grid):
-            print(numpy.matrix(grid))
+    if grid and is_grid_valid(grid) and solve_puzzle(grid):
+        print(numpy.matrix(grid))
     else:
         parser.print_help(sys.stderr)
         sys.exit(1)
