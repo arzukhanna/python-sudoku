@@ -2,6 +2,8 @@
 
 This program solves any problem to the [Sudoku puzzle](https://en.wikipedia.org/wiki/Sudoku).
 
+See [GitHub Wiki](https://github.com/arzukhanna/sudoku-python/wiki).
+
 ## Input
 
 A text file with a grid representing the sudoku puzzle to be solved.
