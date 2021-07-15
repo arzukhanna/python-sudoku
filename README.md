@@ -256,9 +256,9 @@ To configuring a pipeline:
 | [stage](https://docs.gitlab.com/ee/ci/yaml/#stage) | Defines a job stage (E.g., build) |
 | [variables](https://docs.gitlab.com/ee/ci/yaml/#variables) | Define job variables on a job level |
 
-### GitHub 
+## GitHub 
 
-#### Set-up 
+### Set-up remote 
 
 * Rename current Gitlab remote
   ```bash
@@ -284,7 +284,22 @@ To configuring a pipeline:
 * In GitHub, protect develop and main branches. These are long-lived and 
   should be "protected". ( Settings > Branches)
 
-#### Pipelines
+### Pipelines
+
+A pipeline is declared using a YAML file, [.github-actions.yml](.github-actions.yml) 
+which is stored in a new directory [.github/workflows/](.github/workflows/).
+
+#### Workflow Commands 
+
+| Syntax | Description |
+| --------|-------------|
+| name | Name of the workflow which appears in Actions tab of the GitHub repository. |
+| on: [push] | Job runs every time a change is pushed. |
+| jobs | Groups together all jobs to be run in workflow file. |
+| runs-on: ubuntu-latest | Configures the job to run on an Ubuntu Linux runner (The job will execute on a fresh virtual machine hosted by GitHub.|
+| steps |  Groups together all steps. Each nested item is a separate action / shell command.|
+| cache | Manually caches workflow files. |
+
 
 ## Requirements
 
