@@ -256,9 +256,32 @@ To configuring a pipeline:
 | [stage](https://docs.gitlab.com/ee/ci/yaml/#stage) | Defines a job stage (E.g., build) |
 | [variables](https://docs.gitlab.com/ee/ci/yaml/#variables) | Define job variables on a job level |
 
-### GitHub Pipelines
+### GitHub 
 
-- [ ] TODO
+#### Set-up 
+
+* Rename current Gitlab remote
+  ```bash
+  $ git remote rename origin gitlab
+  ```
+
+* Update Git to add new remote to GitHub: 
+  ```bash
+  $ git remote add github git@github.com:arzukhanna/sudoku-python.git
+  ```
+
+* Force push main branch from GitLab to GitHub
+  ```bash
+  $ git push -fu github main
+  ```
+  
+* Push develop and feature branch from GitLab to GitHub
+  ```bash
+  $ git push -u github develop
+  $ git push -u github feature
+  ```
+
+#### Pipelines
 
 ## Requirements
 
@@ -272,3 +295,4 @@ To configuring a pipeline:
 * [GitLab Pipelines](https://docs.gitlab.com/ee/ci/yaml/)
 * [Python Logging](https://zetcode.com/python/logging/)
 * [Logging HOWTO](https://docs.python.org/3/howto/logging.html)
+* [Working with GIT remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes)
