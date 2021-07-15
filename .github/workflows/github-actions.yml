@@ -46,7 +46,6 @@ jobs:
           black --check *.py lib/*.py tests/*.py
           flake8 *.py lib/*.py tests/*.py
           pylint *.py lib/*.py tests/*.py
-          python setup.py check
 
       - name: test
         run: |
