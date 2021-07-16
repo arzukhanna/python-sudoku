@@ -2,9 +2,11 @@
 
 This program solves any problem to the [Sudoku puzzle](https://en.wikipedia.org/wiki/Sudoku).
 
+See [GitHub Wiki](https://github.com/arzukhanna/sudoku-python/wiki).
+
 ## Input
 
-A text file with a grid representing the sudoku puzzle to be solved.
+A text or JSON file with a grid representing the sudoku puzzle to be solved.
 
 ### Grid
 
@@ -19,7 +21,7 @@ A valid grid is one that:
 
 #### Example Easy Puzzle
 
-Source: [data/easy.txt](data/easy.txt)
+Source (text): [data/easy.txt](data/easy.txt)
 
 ```text
 0 2 0 3 5 0 0 8 4
@@ -33,9 +35,29 @@ Source: [data/easy.txt](data/easy.txt)
 0 5 0 0 9 2 0 0 8
 ```
 
+Source (json): [data/easy.json](data/easy.json)
+
+```json
+{
+  "puzzle":
+    [[0, 2, 0, 3, 5, 0, 0, 8, 4],
+    [0, 0, 0, 4, 6, 0, 0, 5, 7],
+    [0, 0, 0, 2, 0, 7, 0, 1, 0],
+    [0, 0, 5, 0, 4, 0, 8, 0, 2],
+    [0, 6, 9, 0, 2, 8, 0, 0, 0],
+    [0, 0, 8, 0, 0, 0, 1, 0, 6],
+    [7, 3, 0, 8, 0, 5, 4, 2, 0],
+    [9, 0, 0, 7, 3, 0, 0, 6, 1],
+    [0, 5, 0, 0, 9, 2, 0, 0, 8]]
+}
+```
+
 ## Output
 
-Solved sudoku puzzles with same dimensions as input with all `0`'s replaced with integers in range from `1` to `9`.
+Solved sudoku puzzles with same dimensions as input with all `0`'s replaced with integers in 
+range from `1` to `9`. 
+
+NOTE: Output solution and format is the same for both text and json input files.
 
 #### Example Solved Puzzle
 
@@ -52,6 +74,18 @@ python3 solve_sudoku.py data/easy.txt
  [9 8 2 7 3 4 5 6 1]
  [4 5 1 6 9 2 3 7 8]]
  ```
+
+#### Example output when wrong file type given
+
+Source: [data/invalid_file](data/invalid_file)
+
+A log error is returned in the format below.
+
+```bash
+    $ python3 solve_sudoku.py data/invalid_file
+    
+    2021-07-16 09:10:16,535:ERROR:Cannot read file type None
+```
 
 ## Virtual Environment
 
@@ -70,7 +104,7 @@ to be replicated without any dependency conflicts.
 |`pip list` |Shows all packages installed in the environment|
 |`deactivate` | Takes you out of the virtual environment and into the global environment|
 
-### Set Version of Python
+### Set Updated Version of Python
 
 Command:
 
@@ -100,6 +134,7 @@ used specifies the virtual environment set-up process which can be accessed usin
 automatically run when the `make` command is run.
 
 Source: [Make Guidelines](https://interrupt.memfault.com/blog/gnu-make-guidelines#when-to-choose-make)
+Makefile: [Makefile](Makefile)
 
 ### Make Components
 
@@ -116,9 +151,9 @@ Source: [Make Guidelines](https://interrupt.memfault.com/blog/gnu-make-guideline
 Known values are tested to known responses.The unit tests have been designed in a 
 way to test the functionality of each small component of the program. Specifically, 
 they test how the program handles both incorrect and correct inputs. Specific lists 
-have been created to be tested by the test functions which all begin with `test_`
+have been created to be tested by the test functions which all begin with `test_`.
 
-Example:
+Examples:
 ```python
 GOOD_LIST = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 LIST_WITH_DUPLICATES = [6, 5, 4, 1, 9, 8, 3, 7, 6]
@@ -256,9 +291,54 @@ To configuring a pipeline:
 | [stage](https://docs.gitlab.com/ee/ci/yaml/#stage) | Defines a job stage (E.g., build) |
 | [variables](https://docs.gitlab.com/ee/ci/yaml/#variables) | Define job variables on a job level |
 
-### GitHub Pipelines
+## GitHub 
 
-- [ ] TODO
+### Set-up remote 
+
+* Rename current Gitlab remote
+  ```bash
+  $ git remote rename origin gitlab
+  ```
+
+* Update Git to add new remote to GitHub: 
+  ```bash
+  $ git remote add github git@github.com:arzukhanna/sudoku-python.git
+  ```
+
+* Force push main branch from GitLab to GitHub
+  ```bash
+  $ git checkout main
+  $ git push -fu github main
+  ```
+  
+* Push develop and feature branch from GitLab to GitHub
+  ```bash
+  $ git checkout develop
+  $ git push -u github develop
+  $ git checkout feature
+  $ git push -u github feature
+  ```
+
+* In GitHub, protect develop and main branches. These are long-lived and 
+  should be "protected". ( Settings > Branches)
+
+### Pipelines
+
+A pipeline is declared using a YAML file, [.python.yml](.github/workflows/python.yml) 
+which is stored in a new directory [.github/workflows/](.github/workflows).
+
+#### Workflow Commands 
+
+| Syntax | Description |
+| --------|-------------|
+| name | Name of the workflow which appears in Actions tab of the GitHub repository. |
+| on: [push] | Job runs every time a change is pushed. |
+| jobs | Groups together all jobs to be run in workflow file. |
+| runs-on: ubuntu-latest | Configures the job to run on an Ubuntu Linux runner (The job will execute on a fresh virtual machine hosted by GitHub.|
+| steps |  Groups together all steps. Each nested item is a separate action / shell command.|
+| cache | Manually caches workflow files. |
+| `if: github.ref == 'refs/heads/main` | Will only run if on main branch. | 
+
 
 ## Requirements
 
@@ -272,3 +352,6 @@ To configuring a pipeline:
 * [GitLab Pipelines](https://docs.gitlab.com/ee/ci/yaml/)
 * [Python Logging](https://zetcode.com/python/logging/)
 * [Logging HOWTO](https://docs.python.org/3/howto/logging.html)
+* [Working with GIT remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes)
+* [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions)
+* [Migrating from GitLab CI/CD to GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/migrating-from-gitlab-cicd-to-github-actions)
