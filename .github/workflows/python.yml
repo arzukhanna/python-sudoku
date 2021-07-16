@@ -55,6 +55,6 @@ jobs:
           source venv/bin/activate
           python -m solve_sudoku -h
           python -m solve_sudoku --version
-          python solve_sudoku data/easy.txt
-          python solve_sudoku data/easy.json
-          python solve_sudoku -v data/easy.txt
+          python solve_sudoku.py data/easy.txt
+          python solve_sudoku.py data/easy.json
+          python solve_sudoku.py -v data/easy.txt
