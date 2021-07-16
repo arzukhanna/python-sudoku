@@ -10,5 +10,5 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "./solve_sudoku.py", "./data/easy.txt"]
+CMD ["./solve_sudoku.py", "--version"]
 

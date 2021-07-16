@@ -53,8 +53,8 @@ jobs:
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         run: |
           source venv/bin/activate
-          python -m solve_sudoku -h
-          python -m solve_sudoku --version
-          python solve_sudoku.py data/easy.txt
-          python solve_sudoku.py data/easy.json
-          python solve_sudoku.py -v data/easy.txt
+          ./solve_sudoku.py -h
+          ./solve_sudoku.py --version
+          ./solve_sudoku.py data/easy.txt
+          ./solve_sudoku.py data/easy.json
+          ./solve_sudoku.py -v data/easy.txt
