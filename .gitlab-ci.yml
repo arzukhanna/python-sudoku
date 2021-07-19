@@ -1,9 +1,13 @@
 ---
 
-image: python:3.9.4-slim
+image: docker:19.03.12
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  DOCKER_TLS_CERTDIR: "/certs"
+
+services:
+  - docker:19.03.12-dind
 
 cache:
   paths:
@@ -20,6 +24,7 @@ before_script:
   - pylint --version
   - black --version
   - echo isort $(isort --version-number)
+  - docker info
 
 build:
   stage: build
