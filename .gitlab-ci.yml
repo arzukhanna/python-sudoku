@@ -20,7 +20,6 @@ before_script:
   - pylint --version
   - black --version
   - echo isort $(isort --version-number)
-  - docker info
 
 build:
   stage: build
