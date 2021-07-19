@@ -340,6 +340,54 @@ which is stored in a new directory [.github/workflows/](.github/workflows).
 | `if: github.ref == 'refs/heads/main` | Will only run if on main branch. | 
 
 
+## Docker Images
+
+### Writing Dockerfile
+
+Source: [Dockerfile](Dockerfile)
+
+* `FROM` specifies the base image on which the docker image will be built.
+* `COPY` add files from the Docker client’s current directory.
+* `RUN` specifies the additional commands to execute.
+* `ENTRYPOINT` sets parameters that will execute (these) cannot be overwritten 
+  from the command line. 
+* `CMD` sets default commands and/or parameters, which can be overwritten from 
+  the command line when docker container runs.
+
+### Building Image Locally
+
+1. Build dockerfile and start executing the commands.
+
+```bash
+docker build --tag python-sudoku .
+```
+
+2. Run the dockerfile.
+
+```bash
+docker run python-sudoku ./solve_sudoku.py <data file>
+```
+
+### Pushing Image to Docker Hub
+
+```bash
+docker tag python-sudoku arzukhanna/python-sudoku
+docker push arzukhanna/python-sudoku
+```
+
+### Pulling Image from Docker Hub
+
+```bash
+docker pull arzukhanna/python-sudoku
+docker run arzukhanna/python-sudoku:latest ./solve_sudoku.py <data file>
+```
+
+### Other Commands
+
+* Removing container: `docker rm <container name>`
+* Remove images: `docker rmi <image name>`
+
+
 ## Requirements
 
 * [Package Versions Required](requirements.txt)
@@ -355,3 +403,4 @@ which is stored in a new directory [.github/workflows/](.github/workflows).
 * [Working with GIT remotes](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes)
 * [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions)
 * [Migrating from GitLab CI/CD to GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/migrating-from-gitlab-cicd-to-github-actions)
+* [CMD vs Entrypoint](https://phoenixnap.com/kb/docker-cmd-vs-entrypoint)
