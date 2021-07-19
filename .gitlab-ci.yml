@@ -20,6 +20,7 @@ before_script:
   - pylint --version
   - black --version
   - echo isort $(isort --version-number)
+  - docker info
 
 build:
   stage: build
@@ -35,3 +36,9 @@ build:
     - python solve_sudoku.py -v data/easy.txt
     - python solve_sudoku.py -h
     - python solve_sudoku.py --version
+
+build image:
+  script:
+    - docker build -t python-sudoku .
+    - docker run python-sudoku
+    - docker run python-sudoku data/easy.txt
