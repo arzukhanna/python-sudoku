@@ -1,39 +1,49 @@
 ---
 
-image: docker:19.03.12
-
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   DOCKER_TLS_CERTDIR: "/certs"
-
-services:
-  - docker:19.03.12-dind
 
 cache:
   paths:
     - .cache/pip
     - venv/
 
-before_script:
-  - python -V
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip install -U -r requirements.txt
-  - flake8 --version
-  - pylint --version
-  - black --version
-  - echo isort $(isort --version-number)
-  - docker info
+stages:
+  - build
+  - check
+  - test
+  - deploy
 
 build:
   stage: build
+  image: python:3.9.6-slim
+  script:
+    - python -V
+    - pip install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip install -U -r requirements.txt
+    - flake8 --version
+    - pylint --version
+    - black --version
+    - echo isort $(isort --version-number)
+    - docker info
+
+check:
+  stage: test
+  image: python:3.9.6-slim
   script:
     - isort --check --diff *.py lib/*.py tests/*.py
     - black --check *.py lib/*.py tests/*.py
     - flake8 *.py lib/*.py tests/*.py
     - pylint *.py lib/*.py tests/*.py
     - pytest -v --cov=lib --cov-report term-missing tests/
+
+test:
+  stage: test
+  image: python:3.9.6-slim
+  script:
     - cat data/easy.txt
     - python solve_sudoku.py data/easy.txt
     - python solve_sudoku.py data/easy.json
@@ -41,8 +51,13 @@ build:
     - python solve_sudoku.py -h
     - python solve_sudoku.py --version
 
-build image:
-  script:
-    - docker build -t python-sudoku .
-    - docker run python-sudoku
-    - docker run python-sudoku data/easy.txt
+#services:
+#  - docker:19.03.12-dind
+#
+#pages:
+#  stage: deploy
+#  image: docker:19.03.12
+#  script:
+#    - docker build -t python-sudoku .
+#    - docker run python-sudoku
+#    - docker run python-sudoku data/easy.txt
