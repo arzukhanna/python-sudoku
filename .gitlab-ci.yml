@@ -28,7 +28,6 @@ build:
     - pylint --version
     - black --version
     - echo isort $(isort --version-number)
-    - docker info
 
 check:
   stage: test
