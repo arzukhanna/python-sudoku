@@ -50,8 +50,8 @@ test:
   cache:
     key: build-cache
     paths:
-        - .cache/pip
-        - venv/
+      - .cache/pip
+      - venv/
 
 build:
     image: docker:latest
@@ -61,5 +61,5 @@ build:
     before_script:
         - echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     script:
-        - docker build --pull -t "CI_REGISTRY_IMAGE" .
-        - docker push "CI_REGISTRY_IMAGE"
+        - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+        - docker push "$CI_REGISTRY_IMAGE"
