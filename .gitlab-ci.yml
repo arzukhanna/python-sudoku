@@ -4,11 +4,6 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   DOCKER_TLS_CERTDIR: "/certs"
 
-cache:
-  paths:
-    - .cache/pip
-    - venv/
-
 stages:
   - build
   - check
@@ -18,7 +13,12 @@ stages:
 build:
   stage: build
   image: python:3.9.6-slim
-  script:
+  cache:
+    paths:
+      - .cache/pip
+      - venv/
+
+before_script:
     - python -V
     - pip install virtualenv
     - virtualenv venv
