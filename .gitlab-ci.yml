@@ -51,23 +51,16 @@ test:
       - venv/
 
 build:
-    image: docker:0.1.0
+    image: docker:20.10.7
     stage: build
-    services:
-        - docker:dind
     before_script:
-        - echo $CI_BUILD_TOKEN | docker login -u "arzukhanna" --password-stdin python-sudoku
+      - echo ${CI_BUILD_TOKEN} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
     script:
-        - docker build --pull --tag arzukhanna/python-sudoku 485c8c2f.
-        - docker push "arzukhanna/python-sudoku"
+      - docker build --pull --tag ${CI_REGISTRY_IMAGE} --tag ${CI_COMMIT_SHORT_SHA} .
+      - docker push ${CI_REGISTRY_IMAGE}
 
-production:
-  image: docker:0.1.0
-  stage: production
-  services:
-    - docker:dind
-  before_script:
-    - echo $CI_BUILD_TOKEN | docker login -u arzukhanna --password-stdin python-sudoku
-  script:
-    - docker pull arzukhanna/python-sudoku .
-    - run arzukhanna/python-sudoku:0.1.0
+#production:
+#  stage: production
+#  script:
+#    - docker pull ${CI_REGISTRY_IMAGE}
+#    - run ${CI_REGISTRY_IMAGE}
