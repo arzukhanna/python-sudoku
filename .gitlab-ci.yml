@@ -2,61 +2,64 @@
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  DOCKER_TLS_CERTDIR: "/certs"
+
 
 stages:
-  - build
   - check
   - test
-  - deploy
+  - build
 
-build:
-  stage: build
-  image: python:3.9.6-slim
-  cache:
-    paths:
-      - .cache/pip
-      - venv/
 
 before_script:
-    - python -V
-    - pip install virtualenv
-    - virtualenv venv
-    - source venv/bin/activate
-    - pip install -U -r requirements.txt
-    - flake8 --version
-    - pylint --version
-    - black --version
-    - echo isort $(isort --version-number)
+  - python -V
+  - pip install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip install -U -r requirements.txt
+  - flake8 --version
+  - pylint --version
+  - black --version
+  - echo isort $(isort --version-number)
+
 
 check:
-  stage: test
+  stage: check
   image: python:3.9.6-slim
   script:
     - isort --check --diff *.py lib/*.py tests/*.py
     - black --check *.py lib/*.py tests/*.py
     - flake8 *.py lib/*.py tests/*.py
     - pylint *.py lib/*.py tests/*.py
-    - pytest -v --cov=lib --cov-report term-missing tests/
+  cache:
+    key: build-cache
+    paths:
+        - .cache/pip
+        - venv/
 
 test:
   stage: test
   image: python:3.9.6-slim
   script:
+    - pytest -v --cov=lib --cov-report term-missing tests/
     - cat data/easy.txt
     - python solve_sudoku.py data/easy.txt
     - python solve_sudoku.py data/easy.json
     - python solve_sudoku.py -v data/easy.txt
     - python solve_sudoku.py -h
     - python solve_sudoku.py --version
+  cache:
+    key: build-cache
+    paths:
+        - .cache/pip
+        - venv/
 
-#services:
-#  - docker:19.03.12-dind
-#
-#pages:
-#  stage: deploy
-#  image: docker:19.03.12
-#  script:
-#    - docker build -t python-sudoku .
-#    - docker run python-sudoku
-#    - docker run python-sudoku data/easy.txt
+build:
+    image: docker:latest
+    stage: build
+    services:
+        - docker:dind
+    before_script:
+        - docker login -u "$CI_REGISTRY_USER" -p "CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    script:
+        - docker build --pull -t "CI_REGISTRY_IMAGE" .
+        - docker push "CI_REGISTRY_IMAGE"
