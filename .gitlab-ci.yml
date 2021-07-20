@@ -1,13 +1,10 @@
 ---
 
-variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-
-
 stages:
   - check
   - test
   - build
+  - production
 
 
 before_script:
@@ -54,12 +51,23 @@ test:
       - venv/
 
 build:
-    image: docker:latest
+    image: docker:0.1.0
     stage: build
     services:
         - docker:dind
     before_script:
-        - echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+        - echo $CI_BUILD_TOKEN | docker login -u "arzukhanna" --password-stdin python-sudoku
     script:
-        - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-        - docker push "$CI_REGISTRY_IMAGE"
+        - docker build --pull --tag arzukhanna/python-sudoku 485c8c2f.
+        - docker push "arzukhanna/python-sudoku"
+
+production:
+  image: docker:0.1.0
+  stage: production
+  services:
+    - docker:dind
+  before_script:
+    - echo $CI_BUILD_TOKEN | docker login -u arzukhanna --password-stdin python-sudoku
+  script:
+    - docker pull arzukhanna/python-sudoku .
+    - run arzukhanna/python-sudoku:0.1.0
