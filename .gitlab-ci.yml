@@ -74,8 +74,6 @@ production:
   stage: production
   services:
     - docker:dind
-  variables:
-    DOCKER_HOST: tcp://localhost:2375/
   before_script:
     - |
       echo ${CI_BUILD_TOKEN} | \
