@@ -69,7 +69,6 @@ build:
         .
     - docker push ${CI_REGISTRY_IMAGE}
 
-
 production:
   image: docker:20.10.7
   stage: production
@@ -84,4 +83,4 @@ production:
         ${CI_REGISTRY}
   script:
     - docker pull ${CI_REGISTRY_IMAGE}
-    - docker run ${CI_REGISTRY_IMAGE}
+    - docker run ${CI_REGISTRY_IMAGE}:latest
