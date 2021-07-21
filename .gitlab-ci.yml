@@ -6,7 +6,6 @@ stages:
   - build
   - production
 
-
 before_script:
   - python -V
   - pip install virtualenv
@@ -17,7 +16,6 @@ before_script:
   - pylint --version
   - black --version
   - echo isort $(isort --version-number)
-
 
 check:
   stage: check
@@ -71,6 +69,8 @@ production:
   needs:
     - job: build
       artifacts: true
+  before_script:
+    - None
   script:
     - docker pull ${CI_REGISTRY_IMAGE}
     - docker run ${CI_REGISTRY_IMAGE}

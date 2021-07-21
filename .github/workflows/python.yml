@@ -2,6 +2,7 @@
 
 name: Python application
 
+# yamllint disable rule:truthy
 on: push
 
 jobs:

@@ -3,6 +3,7 @@
 .hypothesis/
 .idea/
 *.log
+*.log./*
 *.pyc
 __pycache__
 *.pyo
