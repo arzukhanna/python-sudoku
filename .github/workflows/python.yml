@@ -17,12 +17,6 @@ jobs:
         with:
           python-version: 3.9
 
-#      - name: cache
-#        uses: actions/cache@v2
-#        with:
-#          path: venv
-#          key: $GITHUB_REF
-
       - name: setup
         run: |
           python -V
@@ -44,13 +38,13 @@ jobs:
           pylint *.py lib/*.py tests/*.py
 
       - name: test
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/main'||github.ref == 'refs/heads/develop'
         run: |
           source venv/bin/activate
           pytest -v --cov-report term-missing --cov=lib tests/
 
       - name: run
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/main'||github.ref == 'refs/heads/develop'
         run: |
           source venv/bin/activate
           ./solve_sudoku.py -h

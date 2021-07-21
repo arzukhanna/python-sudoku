@@ -3,6 +3,7 @@
 PIP	:= pip3
 PYTHON	:= python3
 SRCS	:= $(wildcard *.py **/*.py)
+YAMLS	:= $(wildcard .*.yml .github/**/*.yml)
 
 .DEFAULT_GOAL := default
 
@@ -45,6 +46,8 @@ lint:
 	flake8 $(SRCS)
 	# check with pylint
 	pylint $(SRCS)
+	# check with yamllint
+	yamllint $(YAMLS)
 
 test:
 	pytest -v --cov=lib --cov-report term-missing tests/
