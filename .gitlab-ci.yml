@@ -3,7 +3,7 @@
 stages:
 #  - check
 #  - test
-#  - build
+  - build
   - production
 
 #before_script:
@@ -48,26 +48,26 @@ stages:
 #      - .cache/pip
 #      - venv/
 #
-#build:
-#  image: docker:20.10.7
-#  stage: build
-#  services:
-#    - docker:dind
-#  before_script:
-#    - |
-#      echo ${CI_BUILD_TOKEN} | \
-#        docker login \
-#          --username ${CI_REGISTRY_USER} \
-#          --password-stdin \
-#          ${CI_REGISTRY}
-#  script:
-#    - |
-#      docker build \
-#        --pull \
-#        --tag ${CI_REGISTRY_IMAGE} \
-#        --tag ${CI_COMMIT_SHORT_SHA} \
-#        .
-#    - docker push ${CI_REGISTRY_IMAGE}
+build:
+  image: docker:20.10.7
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - |
+      echo ${CI_BUILD_TOKEN} | \
+        docker login \
+          --username ${CI_REGISTRY_USER} \
+          --password-stdin \
+          ${CI_REGISTRY}
+  script:
+    - |
+      docker build \
+        --pull \
+        --tag ${CI_REGISTRY_IMAGE} \
+        --tag ${CI_COMMIT_SHORT_SHA} \
+        .
+    - docker push ${CI_REGISTRY_IMAGE}
 
 production:
   image: docker:20.10.7

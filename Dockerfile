@@ -8,12 +8,7 @@ COPY requirements.txt ./
 
 RUN pip3 install -r requirements.txt
 
-ADD lib ./
-
-COPY solve_sudoku.py ./
-
-COPY log.properties ./
-
+COPY . .
 
 ENTRYPOINT ["./solve_sudoku.py"]
 
