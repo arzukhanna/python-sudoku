@@ -47,7 +47,7 @@ lint:
 	# check with pylint
 	pylint $(SRCS)
 	# check with yamllint
-	yamllint $(YAMLS)
+	yamllint --strict $(YAMLS)
 
 test:
 	pytest -v --cov=lib --cov-report term-missing tests/

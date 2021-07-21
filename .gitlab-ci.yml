@@ -70,7 +70,7 @@ production:
     - job: build
       artifacts: true
   before_script:
-    - None
+    - echo
   script:
     - docker pull ${CI_REGISTRY_IMAGE}
     - docker run ${CI_REGISTRY_IMAGE}
