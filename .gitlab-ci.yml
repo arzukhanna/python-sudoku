@@ -72,8 +72,8 @@ stages:
 production:
   image: docker:20.10.7
   stage: production
-  services:
-    - docker:dind
+#  services:
+#    - docker:dind
   before_script:
     - |
       echo ${CI_BUILD_TOKEN} | \
