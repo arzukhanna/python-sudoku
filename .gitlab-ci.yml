@@ -70,17 +70,17 @@ stages:
 #    - docker push ${CI_REGISTRY_IMAGE}
 
 production:
-  image: docker:latest
+  image: docker:20.10.7
   stage: production
   services:
-    - docker:18.09.7-dind
+    - dind
   variables:
     DOCKER_HOST: tcp://localhost:2375/
   before_script:
     - |
       echo ${CI_BUILD_TOKEN} | \
         docker login \
-        --username ${CI_REGISTRY_IMAGE} \
+        --username ${CI_REGISTRY_USER} \
         --password-stdin ${CI_REGISTRY}
   script:
     - docker pull ${CI_REGISTRY_IMAGE}
