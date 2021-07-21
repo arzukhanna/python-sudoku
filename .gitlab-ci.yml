@@ -57,7 +57,7 @@ build:
     - |
       echo ${CI_BUILD_TOKEN} | \
         docker login \
-          -u ${CI_REGISTRY_USER}
+          --username ${CI_REGISTRY_USER} \
           --password-stdin \
           ${CI_REGISTRY}
   script:
@@ -79,7 +79,7 @@ production:
     - |
       echo ${CI_BUILD_TOKEN} | \
         docker login \
-        -u ${CI_REGISTRY_USER} \
+        --username ${CI_REGISTRY_USER} \
         --password-stdin ${CI_REGISTRY}
   script:
     - docker pull ${CI_REGISTRY_IMAGE}
