@@ -54,14 +54,19 @@ build:
   services:
     - docker:dind
   before_script:
-    - >
-      echo ${CI_BUILD_TOKEN} | docker login -u ${CI_REGISTRY_USER}
-        --password-stdin ${CI_REGISTRY}
+    - |
+      echo ${CI_BUILD_TOKEN} | \
+        docker login \
+          -u ${CI_REGISTRY_USER}
+          --password-stdin \
+          ${CI_REGISTRY}
   script:
-    - >
-      docker build --pull
-        --tag ${CI_REGISTRY_IMAGE}
-        --tag ${CI_COMMIT_SHORT_SHA} .
+    - |
+      docker build \
+        --pull \
+        --tag ${CI_REGISTRY_IMAGE} \
+        --tag ${CI_COMMIT_SHORT_SHA} \
+        .
     - docker push ${CI_REGISTRY_IMAGE}
 
 production:
@@ -71,8 +76,10 @@ production:
     - job: build
       artifacts: true
   before_script:
-    - >
-      echo ${CI_BUILD_TOKEN} | docker login -u ${CI_REGISTRY_USER}
+    - |
+      echo ${CI_BUILD_TOKEN} | \
+        docker login \
+        -u ${CI_REGISTRY_USER} \
         --password-stdin ${CI_REGISTRY}
   script:
     - docker pull ${CI_REGISTRY_IMAGE}
