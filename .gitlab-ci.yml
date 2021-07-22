@@ -70,17 +70,16 @@ build:
     - docker push ${CI_REGISTRY_IMAGE}
 
 production:
-  image: docker:20.10.7
   stage: production
-  services:
-    - docker:dind
-  before_script:
-    - |
-      echo ${CI_BUILD_TOKEN} | \
-        docker login \
-        --username ${CI_REGISTRY_USER} \
-        --password-stdin \
-        ${CI_REGISTRY}
+  image:
+    name: ${CI_REGISTRY_IMAGE}:latest
+    entrypoint: [""]
   script:
-    - docker pull ${CI_REGISTRY_IMAGE}
-    - docker run ${CI_REGISTRY_IMAGE}:latest
+    - echo Running image "${CI_REGISTRY_IMAGE}" ...
+    - ./solve_sudoku.py --version
+    - ./solve_sudoku.py -h
+    - echo CI_PROJECT_DIR "${CI_PROJECT_DIR}"
+    - echo CI_BUILDS_DIR "${CI_BUILDS_DIR}"
+    - echo CI_PROJECT_PATH "${CI_PROJECT_PATH}"
+    - ./solve_sudoku.py ${CI_PROJECT_DIR}/data/easy.json
+
