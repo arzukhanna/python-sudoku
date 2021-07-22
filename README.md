@@ -353,6 +353,11 @@ Source: [Dockerfile](Dockerfile)
   from the command line. 
 * `CMD` sets default commands and/or parameters, which can be overwritten from 
   the command line when docker container runs.
+  
+### Registry vs Image 
+
+* A registry is a storage and content delivery system, holding named Docker images, available in different 
+  tagged versions. Users interact with a registry by using docker push and pull commands.
 
 ### Building Image Locally
 
@@ -381,6 +386,82 @@ docker push arzukhanna/python-sudoku
 docker pull arzukhanna/python-sudoku
 docker run arzukhanna/python-sudoku:latest ./solve_sudoku.py <data file>
 ```
+
+### Docker Image onto Container Registry in GitLab 
+
+```python
+build:
+  image: docker:20.10.7
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - |
+      echo ${CI_BUILD_TOKEN} | \
+        docker login \
+          --username ${CI_REGISTRY_USER} \
+          --password-stdin \
+          ${CI_REGISTRY}
+  script:
+    - |
+      docker build \
+        --pull \
+        --tag ${CI_REGISTRY_IMAGE} \
+        --tag ${CI_COMMIT_SHORT_SHA} \
+        .
+    - docker push ${CI_REGISTRY_IMAGE}
+
+production:
+  stage: production
+  image:
+    name: ${CI_REGISTRY_IMAGE}:latest
+    entrypoint: [""]
+  script:
+    - echo Running image "${CI_REGISTRY_IMAGE}" ...
+    - ./solve_sudoku.py --version
+    - ./solve_sudoku.py -h
+    - echo CI_PROJECT_DIR "${CI_PROJECT_DIR}"
+    - echo CI_BUILDS_DIR "${CI_BUILDS_DIR}"
+    - echo CI_PROJECT_PATH "${CI_PROJECT_PATH}"
+    - ./solve_sudoku.py ${CI_PROJECT_DIR}/data/easy.json
+```
+
+### Testing Docker image from another GitLab repository
+
+```python
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables: 
+    REGISTRY: registry.gitlab.com/themarlogroup/training/students/akhanna/python-sudoku
+    IMAGE: arzukhanna/python-sudoku:latest
+
+before_script:
+  - |
+    echo ${CI_BUILD_TOKEN} | \
+      docker login \
+      --username ${CI_REGISTRY_USER} \
+      --password-stdin \
+      ${REGISTRY}
+
+test:
+  stage: test
+  script:
+    - docker run 
+        -v "${CI_PROJECT_DIR}":/mnt/
+        ${IMAGE} /mnt/hard_puzzle.json
+```
+
+* `docker run -v "${CI_PROJECT_DIR}":/mnt/ ${IMAGE} /mnt/hard_puzzle.json`
+  * Creates a volume from the local project directory and mounts point inside container
+  
+
+* `mnt` (`mount`) mounts a file or directory on the host machine into a container.
+The file/directory is referenced by its path on the host machine. When volume (`-v`) is 
+used, a new directory is created within Docker’s storage directory on the host machine, 
+and Docker manages that directory’s contents.
 
 ### Other Commands
 
